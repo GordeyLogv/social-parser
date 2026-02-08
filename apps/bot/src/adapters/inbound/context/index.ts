@@ -1,4 +1,3 @@
-export * from './steeps.enum';
 export * from './platforms.enum';
 
 export * from './my-context.interace';

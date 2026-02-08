@@ -3,21 +3,31 @@ import { Bot } from 'grammy';
 
 import { TYPES } from '../types';
 
-import { MyContext } from '../adapters/inbound';
+import { ExceptionFilterInfrastructurePort, MyContext } from '../adapters/inbound';
+import { CommandRegistryHelper } from '../shared';
 
 @injectable()
 export class TelegramBot {
-  public constructor(@inject(TYPES.Grammy) private readonly bot: Bot<MyContext>) {}
+  public constructor(
+    @inject(TYPES.Grammy) private readonly bot: Bot<MyContext>,
+    @inject(TYPES.ExceptionFilterPort) private readonly exceptionFilter: ExceptionFilterInfrastructurePort,
+
+    @inject(TYPES.CommandsRegistryHelper) private commands: CommandRegistryHelper,
+  ) {}
 
   private useMiddlewares(): void {}
 
   private useListenersMessages(): void {}
 
-  private useCommands(): void {}
+  private useCommands(): void {
+    this.commands.registryCommands(this.bot);
+  }
 
   private useCallbackQueries(): void {}
 
-  private useExceptionFilter(): void {}
+  private useExceptionFilter(): void {
+    this.bot.catch(({ error, ctx }) => this.exceptionFilter.handle(error, ctx));
+  }
 
   public async init(): Promise<void> {
     this.useMiddlewares();

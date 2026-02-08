@@ -1,5 +1,5 @@
 import { MyContext } from '../context';
 
-export interface ExceptionFilterPort {
+export interface ExceptionFilterInfrastructurePort {
   handle: (error: unknown, ctx: MyContext) => Promise<void>;
 }

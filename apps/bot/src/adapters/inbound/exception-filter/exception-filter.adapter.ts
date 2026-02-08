@@ -2,14 +2,14 @@ import { inject, injectable } from 'inversify';
 
 import { LoggerPort } from '@app/core';
 
-import { ExceptionFilterPort, normalizeErrorHelper } from './';
+import { ExceptionFilterInfrastructurePort, normalizeErrorHelper } from './';
 
 import { MyContext } from '../context';
 
 import { TYPES } from '../../../types';
 
 @injectable()
-export class ExceptionFilterAdapter implements ExceptionFilterPort {
+export class ExceptionFilterAdapter implements ExceptionFilterInfrastructurePort {
   public constructor(@inject(TYPES.LoggerPort) private readonly logger: LoggerPort) {
     this.logger.info(`[Adapter] ${ExceptionFilterAdapter.name} - loading success`);
   }
