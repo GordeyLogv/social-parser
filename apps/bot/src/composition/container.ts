@@ -3,22 +3,38 @@ import { Bot } from 'grammy';
 
 import { ConfigPort, LoggerPort, UserGreetingUseCase } from '@app/core';
 
-import { ExceptionFilterAdapter, ExceptionFilterInfrastructurePort, MyContext, StartCommand } from '../adapters/inbound';
+import {
+  AccountsCallbackQuery,
+  AddAccountCallbackQuey,
+  ExceptionFilterAdapter,
+  ExceptionFilterInfrastructurePort,
+  HelpCallbackQuery,
+  ICallbackQuery,
+  ICommand,
+  MenuCallbackQuery,
+  MyContext,
+  StartCommand,
+  TopAccountsCallbackQuery,
+  ChoosedPlatformCallbackQuery,
+} from '../adapters/inbound';
+
 import { LoggerAdapter, ConfigAdapter } from '../adapters/outbound';
 
 import { TYPES } from '../types';
 
 import { TelegramBot } from '../app';
 
-import { CommandRegistryHelper, ICommand } from '../shared';
+import { CommandRegistryHelper, CallbackQueryRegistryHelper } from '../shared';
 
 export const initContainer = () => {
   const container = new Container();
 
+  // Adapters
   container.bind<LoggerPort>(TYPES.LoggerPort).to(LoggerAdapter).inSingletonScope();
   container.bind<ConfigPort>(TYPES.ConfigPort).to(ConfigAdapter).inSingletonScope();
   container.bind<ExceptionFilterInfrastructurePort>(TYPES.ExceptionFilterPort).to(ExceptionFilterAdapter).inSingletonScope();
 
+  // Use-cases
   container
     .bind<UserGreetingUseCase>(TYPES.UserGreetingUseCase)
     .toDynamicValue((ctx) => {
@@ -27,8 +43,21 @@ export const initContainer = () => {
     })
     .inSingletonScope();
 
+  // Commands
   container.bind<ICommand>(TYPES.ICommand).to(StartCommand).inSingletonScope();
   container.bind<CommandRegistryHelper>(TYPES.CommandsRegistryHelper).to(CommandRegistryHelper).inSingletonScope();
+
+  // CallbackQueries
+  container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(MenuCallbackQuery).inSingletonScope();
+  container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(HelpCallbackQuery).inSingletonScope();
+  container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(AccountsCallbackQuery).inSingletonScope();
+  container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(AddAccountCallbackQuey).inSingletonScope();
+  container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(ChoosedPlatformCallbackQuery).inSingletonScope();
+  container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(TopAccountsCallbackQuery).inSingletonScope();
+  container
+    .bind<CallbackQueryRegistryHelper>(TYPES.CallbackQueryRegistryHelper)
+    .to(CallbackQueryRegistryHelper)
+    .inSingletonScope();
 
   container
     .bind<Bot<MyContext>>(TYPES.Grammy)

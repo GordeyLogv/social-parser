@@ -5,11 +5,11 @@ import { UserGreetingInput, UserGreetingOutput } from '../../contracts';
 import { greetingMessage, greetingLoggingMessage } from '../messages';
 
 export class UserGreetingUseCase {
-  constructor(private readonly logger: LoggerPort) {}
+  public constructor(private readonly logger: LoggerPort) {}
 
   public execute(input: UserGreetingInput): UserGreetingOutput {
     this.logger.info(greetingLoggingMessage.START, {
-      userTelegramId: input.userTelegramId,
+      userTelegramId: input.userId,
       userFirstName: input.userFirstName,
     });
 

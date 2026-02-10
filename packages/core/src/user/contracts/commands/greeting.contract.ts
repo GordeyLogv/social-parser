@@ -1,5 +1,5 @@
 export interface UserGreetingInput {
-  userTelegramId: number;
+  userId: number;
   userFirstName: string;
 }
 

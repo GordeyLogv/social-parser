@@ -3,11 +3,9 @@ import { Bot } from 'grammy';
 
 import { LoggerPort } from '@app/core';
 
-import { ICommand } from '../interafeces';
-
 import { TYPES } from '../../types';
 
-import { MyContext } from '../../adapters/inbound';
+import { MyContext, ICommand } from '../../adapters/inbound';
 
 @injectable()
 export class CommandRegistryHelper {

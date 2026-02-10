@@ -1,1 +1,1 @@
-export * from './greeting.command';
+export * from './greeting.contract';

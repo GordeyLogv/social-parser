@@ -8,6 +8,9 @@ export const TYPES = {
   ICommand: Symbol.for('ICommand'),
   CommandsRegistryHelper: Symbol.for('CommandRegistryHelper'),
 
+  ICallbackQuery: Symbol.for('ICallbackQuery'),
+  CallbackQueryRegistryHelper: Symbol.for('CallbackQueryRegistryHelper'),
+
   Grammy: Symbol.for('Grammy'),
 
   TelegramBot: Symbol.for('TelegramBot'),

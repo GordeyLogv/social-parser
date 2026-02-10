@@ -4,7 +4,8 @@ import { Bot } from 'grammy';
 import { TYPES } from '../types';
 
 import { ExceptionFilterInfrastructurePort, MyContext } from '../adapters/inbound';
-import { CommandRegistryHelper } from '../shared';
+
+import { CallbackQueryRegistryHelper, CommandRegistryHelper } from '../shared';
 
 @injectable()
 export class TelegramBot {
@@ -12,7 +13,9 @@ export class TelegramBot {
     @inject(TYPES.Grammy) private readonly bot: Bot<MyContext>,
     @inject(TYPES.ExceptionFilterPort) private readonly exceptionFilter: ExceptionFilterInfrastructurePort,
 
-    @inject(TYPES.CommandsRegistryHelper) private commands: CommandRegistryHelper,
+    @inject(TYPES.CommandsRegistryHelper) private readonly commands: CommandRegistryHelper,
+
+    @inject(TYPES.CallbackQueryRegistryHelper) private readonly callbackQueries: CallbackQueryRegistryHelper,
   ) {}
 
   private useMiddlewares(): void {}
@@ -23,7 +26,9 @@ export class TelegramBot {
     this.commands.registryCommands(this.bot);
   }
 
-  private useCallbackQueries(): void {}
+  private useCallbackQueries(): void {
+    this.callbackQueries.registryCallbackQueries(this.bot);
+  }
 
   private useExceptionFilter(): void {
     this.bot.catch(({ error, ctx }) => this.exceptionFilter.handle(error, ctx));

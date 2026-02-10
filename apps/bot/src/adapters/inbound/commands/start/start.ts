@@ -7,7 +7,9 @@ import { MyContext } from '../../context';
 
 import { TYPES } from '../../../../types';
 
-import { ICommand, menuKeyboard } from '../../../../shared';
+import { menuKeyboard } from '../../../../shared';
+
+import { ICommand } from '../command.interface';
 
 @injectable()
 export class StartCommand implements ICommand {
@@ -19,7 +21,7 @@ export class StartCommand implements ICommand {
   public register(bot: Bot<MyContext>): void {
     bot.command('start', async (ctx) => {
       const res: UserGreetingInput = {
-        userTelegramId: ctx.from?.id ?? 0,
+        userId: ctx.from?.id ?? 0,
         userFirstName: ctx.from?.first_name ?? '',
       };
 
