@@ -1,6 +1,6 @@
-import { PlatformEnum, StepEnum } from './';
+import { PlatformsEnum, StepsEnum } from './';
 
 export interface IMyContext {
-  step: StepEnum;
-  platform: PlatformEnum;
+  step: StepsEnum;
+  platform?: PlatformsEnum;
 }

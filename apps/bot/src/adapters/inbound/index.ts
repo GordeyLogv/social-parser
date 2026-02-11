@@ -5,3 +5,5 @@ export * from './exception-filter';
 export * from './commands';
 
 export * from './callbackQueries';
+
+export * from './middlewares';

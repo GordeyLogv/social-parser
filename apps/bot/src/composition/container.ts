@@ -5,7 +5,7 @@ import { ConfigPort, LoggerPort, UserGreetingUseCase } from '@app/core';
 
 import {
   AccountsCallbackQuery,
-  AddAccountCallbackQuey,
+  AddAccountCallbackQuery,
   ExceptionFilterAdapter,
   ExceptionFilterInfrastructurePort,
   HelpCallbackQuery,
@@ -16,6 +16,7 @@ import {
   StartCommand,
   TopAccountsCallbackQuery,
   ChoosedPlatformCallbackQuery,
+  SessionMiddleware,
 } from '../adapters/inbound';
 
 import { LoggerAdapter, ConfigAdapter } from '../adapters/outbound';
@@ -51,13 +52,16 @@ export const initContainer = () => {
   container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(MenuCallbackQuery).inSingletonScope();
   container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(HelpCallbackQuery).inSingletonScope();
   container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(AccountsCallbackQuery).inSingletonScope();
-  container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(AddAccountCallbackQuey).inSingletonScope();
+  container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(AddAccountCallbackQuery).inSingletonScope();
   container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(ChoosedPlatformCallbackQuery).inSingletonScope();
   container.bind<ICallbackQuery>(TYPES.ICallbackQuery).to(TopAccountsCallbackQuery).inSingletonScope();
   container
     .bind<CallbackQueryRegistryHelper>(TYPES.CallbackQueryRegistryHelper)
     .to(CallbackQueryRegistryHelper)
     .inSingletonScope();
+
+  // Middlewares
+  container.bind<SessionMiddleware>(TYPES.SessionMiddleware).to(SessionMiddleware).inSingletonScope();
 
   container
     .bind<Bot<MyContext>>(TYPES.Grammy)

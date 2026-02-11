@@ -22,11 +22,11 @@ export class TopAccountsCallbackQuery implements ICallbackQuery {
         userFirstName: ctx.from.first_name,
       });
 
-      ctx.answerCallbackQuery();
+      await ctx.answerCallbackQuery();
 
-      const accounts = '';
+      const accounts = 'Топ аккаунты';
 
-      ctx.editMessageText(accounts, { reply_markup: backKeyboard('ui:menu') });
+      await ctx.editMessageText(accounts, { reply_markup: backKeyboard('ui:menu') });
     });
   }
 }

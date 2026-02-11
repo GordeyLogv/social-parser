@@ -22,9 +22,9 @@ export class MenuCallbackQuery implements ICallbackQuery {
         userFirstName: ctx.from.first_name,
       });
 
-      ctx.answerCallbackQuery();
+      await ctx.answerCallbackQuery();
 
-      ctx.editMessageText('Меню', { reply_markup: menuKeyboard() });
+      await ctx.editMessageText('Меню', { reply_markup: menuKeyboard() });
     });
   }
 }

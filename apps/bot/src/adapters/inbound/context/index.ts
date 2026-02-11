@@ -1,4 +1,5 @@
 export * from './platforms.enum';
+export * from './steps.enum';
 
 export * from './my-context.interace';
 

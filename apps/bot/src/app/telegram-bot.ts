@@ -3,7 +3,7 @@ import { Bot } from 'grammy';
 
 import { TYPES } from '../types';
 
-import { ExceptionFilterInfrastructurePort, MyContext } from '../adapters/inbound';
+import { ExceptionFilterInfrastructurePort, MyContext, SessionMiddleware } from '../adapters/inbound';
 
 import { CallbackQueryRegistryHelper, CommandRegistryHelper } from '../shared';
 
@@ -16,9 +16,13 @@ export class TelegramBot {
     @inject(TYPES.CommandsRegistryHelper) private readonly commands: CommandRegistryHelper,
 
     @inject(TYPES.CallbackQueryRegistryHelper) private readonly callbackQueries: CallbackQueryRegistryHelper,
+
+    @inject(TYPES.SessionMiddleware) private readonly sessionMiddleware: SessionMiddleware,
   ) {}
 
-  private useMiddlewares(): void {}
+  private useMiddlewares(): void {
+    this.sessionMiddleware.register(this.bot);
+  }
 
   private useListenersMessages(): void {}
 

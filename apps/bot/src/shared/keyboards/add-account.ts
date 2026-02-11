@@ -6,7 +6,7 @@ export const addAccountKeyboard = () => {
     .row()
     .text('Instagram', 'ui:add_account:Instagram')
     .row()
-    .text('YouTube', 'ui:add_account:Youtube')
+    .text('YouTube', 'ui:add_account:YouTube')
     .row()
-    .text('⬅️ Назад', 'ui:home');
+    .text('⬅️ Назад', 'ui:menu');
 };

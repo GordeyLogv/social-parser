@@ -22,9 +22,9 @@ export class HelpCallbackQuery implements ICallbackQuery {
         userFirstName: ctx.from.first_name,
       });
 
-      ctx.answerCallbackQuery();
+      await ctx.answerCallbackQuery();
 
-      ctx.editMessageText('Помощь', { reply_markup: backKeyboard('ui:menu') });
+      await ctx.editMessageText('Помощь', { reply_markup: backKeyboard('ui:menu') });
     });
   }
 }

@@ -16,17 +16,17 @@ export class AccountsCallbackQuery implements ICallbackQuery {
   public constructor(@inject(TYPES.LoggerPort) private readonly logger: LoggerPort) {}
 
   public register(bot: Bot<MyContext>): void {
-    bot.callbackQuery('ui:my_accunts', async (ctx) => {
+    bot.callbackQuery('ui:my_accounts', async (ctx) => {
       this.logger.info(`[CallbackQuery] ${AccountsCallbackQuery.name} - start calbackQuery`, {
         userTelegramId: ctx.from.id,
         userFirstName: ctx.from.first_name,
       });
 
-      ctx.answerCallbackQuery();
+      await ctx.answerCallbackQuery();
 
-      const accounts = '';
+      const accounts = 'Мои аккаунты';
 
-      ctx.editMessageText(accounts, { reply_markup: backKeyboard('ui:menu') });
+      await ctx.editMessageText(accounts, { reply_markup: backKeyboard('ui:menu') });
     });
   }
 }
