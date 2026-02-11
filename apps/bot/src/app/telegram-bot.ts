@@ -5,7 +5,7 @@ import { TYPES } from '../types';
 
 import { ExceptionFilterInfrastructurePort, MyContext, SessionMiddleware } from '../adapters/inbound';
 
-import { CallbackQueryRegistryHelper, CommandRegistryHelper } from '../shared';
+import { CallbackQueryRegistryHelper, CommandRegistryHelper, ListerMessageRegistryHelper } from '../shared';
 
 @injectable()
 export class TelegramBot {
@@ -17,6 +17,8 @@ export class TelegramBot {
 
     @inject(TYPES.CallbackQueryRegistryHelper) private readonly callbackQueries: CallbackQueryRegistryHelper,
 
+    @inject(TYPES.ListerMessageRegistryHelper) private readonly listenersMessages: ListerMessageRegistryHelper,
+
     @inject(TYPES.SessionMiddleware) private readonly sessionMiddleware: SessionMiddleware,
   ) {}
 
@@ -24,7 +26,9 @@ export class TelegramBot {
     this.sessionMiddleware.register(this.bot);
   }
 
-  private useListenersMessages(): void {}
+  private useListenersMessages(): void {
+    this.listenersMessages.registry(this.bot);
+  }
 
   private useCommands(): void {
     this.commands.registryCommands(this.bot);

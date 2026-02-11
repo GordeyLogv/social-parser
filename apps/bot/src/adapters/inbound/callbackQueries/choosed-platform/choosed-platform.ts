@@ -7,7 +7,7 @@ import { backKeyboard, choosedPlatformMessage, platformsMapper, setSessionHelper
 
 import { TYPES } from '../../../../types';
 
-import { MyContext, PlatformsEnum, StepsEnum } from '../../context';
+import { MyContext, StepsEnum } from '../../context';
 
 import { ICallbackQuery } from '../callback-query.interface';
 

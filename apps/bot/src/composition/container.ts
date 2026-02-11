@@ -17,6 +17,9 @@ import {
   TopAccountsCallbackQuery,
   ChoosedPlatformCallbackQuery,
   SessionMiddleware,
+  IListenerMessage,
+  FallbackMessageListener,
+  AddedAccountListener,
 } from '../adapters/inbound';
 
 import { LoggerAdapter, ConfigAdapter } from '../adapters/outbound';
@@ -26,6 +29,7 @@ import { TYPES } from '../types';
 import { TelegramBot } from '../app';
 
 import { CommandRegistryHelper, CallbackQueryRegistryHelper } from '../shared';
+import { ListerMessageRegistryHelper } from '../shared/helpers/listener-message-registry.helper';
 
 export const initContainer = () => {
   const container = new Container();
@@ -62,6 +66,14 @@ export const initContainer = () => {
 
   // Middlewares
   container.bind<SessionMiddleware>(TYPES.SessionMiddleware).to(SessionMiddleware).inSingletonScope();
+
+  // Listeners
+  container.bind<IListenerMessage>(TYPES.IListenerMessage).to(FallbackMessageListener).inSingletonScope();
+  container.bind<IListenerMessage>(TYPES.IListenerMessage).to(AddedAccountListener).inSingletonScope();
+  container
+    .bind<ListerMessageRegistryHelper>(TYPES.ListerMessageRegistryHelper)
+    .to(ListerMessageRegistryHelper)
+    .inSingletonScope();
 
   container
     .bind<Bot<MyContext>>(TYPES.Grammy)

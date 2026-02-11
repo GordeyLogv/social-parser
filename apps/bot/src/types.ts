@@ -11,6 +11,9 @@ export const TYPES = {
   ICallbackQuery: Symbol.for('ICallbackQuery'),
   CallbackQueryRegistryHelper: Symbol.for('CallbackQueryRegistryHelper'),
 
+  IListenerMessage: Symbol.for('IListenerMessage'),
+  ListerMessageRegistryHelper: Symbol.for('ListenerMessageRegistryHelper'),
+
   SessionMiddleware: Symbol.for('SessionMiddleware'),
 
   Grammy: Symbol.for('Grammy'),
