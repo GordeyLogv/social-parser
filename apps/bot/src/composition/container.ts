@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
 import { Bot } from 'grammy';
 
-import { ConfigPort, LoggerPort, UserGreetingUseCase } from '@app/core';
+import { AccountRepositoryPort, ConfigPort, GetAccountsUseCase, LoggerPort, UserGreetingUseCase } from '@app/core';
 
 import {
   AccountsCallbackQuery,
@@ -22,22 +22,22 @@ import {
   AddedAccountListener,
 } from '../adapters/inbound';
 
-import { LoggerAdapter, ConfigAdapter } from '../adapters/outbound';
+import { LoggerAdapter, ConfigAdapter, HttpAccountRepositoryAdapter } from '../adapters/outbound';
 
 import { TYPES } from '../types';
 
 import { TelegramBot } from '../app';
 
-import { CommandRegistryHelper, CallbackQueryRegistryHelper } from '../shared';
-import { ListerMessageRegistryHelper } from '../shared/helpers/listener-message-registry.helper';
+import { CommandRegistryHelper, CallbackQueryRegistryHelper, ListerMessageRegistryHelper } from '../shared';
 
-export const initContainer = () => {
+export const initContainer = (): Container => {
   const container = new Container();
 
   // Adapters
   container.bind<LoggerPort>(TYPES.LoggerPort).to(LoggerAdapter).inSingletonScope();
   container.bind<ConfigPort>(TYPES.ConfigPort).to(ConfigAdapter).inSingletonScope();
   container.bind<ExceptionFilterInfrastructurePort>(TYPES.ExceptionFilterPort).to(ExceptionFilterAdapter).inSingletonScope();
+  container.bind<AccountRepositoryPort>(TYPES.AccountRepositoryPort).to(HttpAccountRepositoryAdapter).inSingletonScope();
 
   // Use-cases
   container
@@ -45,6 +45,14 @@ export const initContainer = () => {
     .toDynamicValue((ctx) => {
       const logger = ctx.get<LoggerPort>(TYPES.LoggerPort);
       return new UserGreetingUseCase(logger);
+    })
+    .inSingletonScope();
+  container
+    .bind<GetAccountsUseCase>(TYPES.GetAccountsUseCase)
+    .toDynamicValue((ctx) => {
+      const logger = ctx.get<LoggerPort>(TYPES.LoggerPort);
+      const accountRepository = ctx.get<AccountRepositoryPort>(TYPES.AccountRepositoryPort);
+      return new GetAccountsUseCase(logger, accountRepository);
     })
     .inSingletonScope();
 

@@ -1,3 +1,3 @@
 export enum greetingLoggingMessage {
-  'START' = '[Use-case] UserGreetingUseCase - start use-case',
+  START = '[Use-case] UserGreetingUseCase - start use-case',
 }

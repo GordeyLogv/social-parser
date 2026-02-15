@@ -1,15 +1,14 @@
-import { PlatformsEnum } from '../../../adapters/inbound';
+import { AccountPlatformEnum } from '@app/core';
 
-export const platformsMapper = (platform: string): PlatformsEnum => {
+export const platformsMapper = (platform: string): AccountPlatformEnum => {
   switch (platform) {
     case 'TikTok':
-      return PlatformsEnum.TIKTOK;
+      return AccountPlatformEnum.TIKTOK;
     case 'Instagram':
-      return PlatformsEnum.INSTAGRAM;
+      return AccountPlatformEnum.INSTAGRAM;
     case 'YouTube':
-      return PlatformsEnum.YOUTUBE;
+      return AccountPlatformEnum.YOUTUBE;
     default:
-      const never = platform as PlatformsEnum;
-      return never;
+      throw new Error('Неверная платформа');
   }
 };

@@ -8,9 +8,7 @@ import { TYPES } from '../../../types';
 
 import { MyContext, StepsEnum } from '../context';
 
-import { addedAccountListenerMessage } from '../../../shared/messages/listeners';
-
-import { setSessionHelper } from '../../../shared';
+import { setSessionHelper, addedAccountListenerMessage } from '../../../shared';
 
 @injectable()
 export class AddedAccountListener implements IListenerMessage {

@@ -1,6 +1,5 @@
-export * from './platforms.enum';
 export * from './steps.enum';
 
-export * from './my-context.interace';
+export * from './my-context.interface';
 
 export * from './my-context.type';

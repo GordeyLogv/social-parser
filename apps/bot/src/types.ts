@@ -2,8 +2,10 @@ export const TYPES = {
   LoggerPort: Symbol.for('LoggerPort'),
   ConfigPort: Symbol.for('ConfigPort'),
   ExceptionFilterPort: Symbol.for('ExceptionFilterPort'),
+  AccountRepositoryPort: Symbol.for('AccountRepositoryPort'),
 
   UserGreetingUseCase: Symbol.for('UserGreetingUseCase'),
+  GetAccountsUseCase: Symbol.for('GetAccountsUseCase'),
 
   ICommand: Symbol.for('ICommand'),
   CommandsRegistryHelper: Symbol.for('CommandRegistryHelper'),
