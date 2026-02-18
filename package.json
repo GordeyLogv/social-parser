@@ -1,0 +1,35 @@
+{
+  "name": "social-parser",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "eslint apps packages",
+    "format": "prettier --write apps packages",
+    "build": "npm -ws run build",
+    "start:all": "npm -ws run start",
+    "dev:all": "npm -ws run start:dev",
+    "dev:api": "npm -w apps/api run start:dev",
+    "dev:bot": "npm -w apps/bot run start:dev",
+    "dev:parser": "npm -w apps/parser run start:dev"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.2.2",
+    "eslint": "^10.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "inversify": "^7.11.0",
+    "reflect-metadata": "^0.2.2"
+  }
+}
