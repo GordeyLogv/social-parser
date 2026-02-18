@@ -14,7 +14,10 @@
     "dev:all": "npm -ws run start:dev",
     "dev:api": "npm -w apps/api run start:dev",
     "dev:bot": "npm -w apps/bot run start:dev",
-    "dev:parser": "npm -w apps/parser run start:dev"
+    "dev:parser": "npm -w apps/parser run start:dev",
+    "prisma:generate": "npm -w apps/api run prisma:generate",
+    "prisma:migrate": "npm -w apps/api run prisma:migrate",
+    "prisma:studio": "npm -w apps/api run prisma:studio"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
@@ -30,6 +33,7 @@
   },
   "dependencies": {
     "inversify": "^7.11.0",
-    "reflect-metadata": "^0.2.2"
+    "reflect-metadata": "^0.2.2",
+    "typescript-eslint": "^8.56.0"
   }
 }
