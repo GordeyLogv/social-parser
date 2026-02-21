@@ -34,6 +34,7 @@ export default tseslint.config(
       '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/no-namespace': ['off'],
       '@typescript-eslint/no-unused-vars': ['off'],
+      '@typescript-eslint/no-case-declarations': ['off'],
     },
   },
 );

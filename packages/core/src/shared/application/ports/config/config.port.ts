@@ -1,3 +1,3 @@
 export interface ConfigPort {
-  get: (key: string) => string | undefined;
+  get: (key: string) => string;
 }
