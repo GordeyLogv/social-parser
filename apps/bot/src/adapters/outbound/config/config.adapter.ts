@@ -7,8 +7,8 @@ import { TOKENS } from '../../../tokens';
 
 @injectable()
 export class ConfigAdapter implements ConfigPort {
-  public constructor(@inject(TOKENS.LoggerPort) private readonly logger: LoggerPort) {
-    this.logger.info(`[${ConfigAdapter.name}] => loading success`);
+  public constructor(@inject(TOKENS.ConfigLogger) private readonly logger: LoggerPort) {
+    this.logger.info('Loading succes');
   }
 
   public get(key: string): string {

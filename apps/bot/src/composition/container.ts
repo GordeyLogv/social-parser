@@ -4,17 +4,43 @@ import { TOKENS } from '../tokens';
 import { ConfigAdapter, LoggerAdapter } from '../adapters/outbound';
 import { Bot, Context } from 'grammy';
 import { TelegramBot } from '../app/telegram-bot';
+import { StartCommand } from '../adapters/inbound/commands/start/start.command';
 
 export const initContainer = (): Container => {
   const container = new Container();
 
+  // Adapters
   container
     .bind<LoggerPort>(TOKENS.LoggerPort)
     .toDynamicValue(() => {
-      return new LoggerAdapter(LoggerAppEnum.BOT, LoggerHandleEnum.ADAPTER);
+      return new LoggerAdapter(LoggerAppEnum.BOT, LoggerHandleEnum.ADAPTER, LoggerAdapter.name);
     })
     .inSingletonScope();
+
   container.bind<ConfigPort>(TOKENS.ConfigPort).to(ConfigAdapter).inSingletonScope();
+
+  // Logging
+  container
+    .bind<LoggerPort>(TOKENS.ConfigLogger)
+    .toDynamicValue((ctx) => ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandleName(ConfigAdapter.name))
+    .inSingletonScope();
+
+  container
+    .bind<LoggerPort>(TOKENS.StartCommandLogger)
+    .toDynamicValue((ctx) =>
+      ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandle(LoggerHandleEnum.COMMAND).withHandleName(StartCommand.name),
+    )
+    .inSingletonScope();
+
+  container
+    .bind<LoggerPort>(TOKENS.TelegramBotLogger)
+    .toDynamicValue((ctx) =>
+      ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandle(LoggerHandleEnum.APP).withHandleName(TelegramBot.name),
+    )
+    .inSingletonScope();
+
+  // Commands
+  container.bind<StartCommand>(TOKENS.StartCommand).to(StartCommand).inSingletonScope();
 
   container
     .bind<Bot<Context>>(TOKENS.Grammy)

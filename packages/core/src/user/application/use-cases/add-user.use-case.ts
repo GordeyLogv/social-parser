@@ -9,18 +9,19 @@ import { AddUserLoggingMessage } from '../messages/add-user';
 import { UserRepositoryPort, ClockPort } from '../ports';
 
 export class AddUserUseCase {
-  private readonly loggerPort: LoggerPort;
-
   constructor(
     private readonly logger: LoggerPort,
     private readonly userRepository: UserRepositoryPort,
     private readonly clock: ClockPort,
   ) {
-    this.loggerPort = logger.withApp(LoggerAppEnum.CORE).withHandle(LoggerHandleEnum.USECASE);
+    this.logger = logger
+      .withApp(LoggerAppEnum.CORE)
+      .withHandle(LoggerHandleEnum.USECASE)
+      .withHandleName(AddUserUseCase.name);
   }
 
   public async execute(input: AddUserInput): Promise<void> {
-    this.loggerPort.info(AddUserLoggingMessage.START, { input });
+    this.logger.info(AddUserLoggingMessage.START, { input });
 
     const now: Date = this.clock.at();
 
@@ -34,12 +35,12 @@ export class AddUserUseCase {
 
       await this.userRepository.save(createdUser);
 
-      this.loggerPort.info(AddUserLoggingMessage.FINISHED, { createdUser });
+      this.logger.info(AddUserLoggingMessage.FINISHED, { createdUser });
     } catch (error) {
       if (error instanceof DomainError || error instanceof ApplicationError) {
-        this.loggerPort.warn(AddUserLoggingMessage.FAILED, { error });
+        this.logger.warn(AddUserLoggingMessage.FAILED, { error });
       } else {
-        this.loggerPort.error(AddUserLoggingMessage.UNKNOWN_ERROR, { error });
+        this.logger.error(AddUserLoggingMessage.UNKNOWN_ERROR, { error });
       }
       throw error;
     }

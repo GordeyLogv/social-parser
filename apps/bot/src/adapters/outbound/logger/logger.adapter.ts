@@ -7,6 +7,7 @@ export class LoggerAdapter implements LoggerPort {
   constructor(
     private readonly app: LoggerAppEnum,
     private readonly handle: LoggerHandleEnum,
+    private readonly handleName?: string,
   ) {}
 
   public info(message: string, meta?: Record<string, unknown>): void {
@@ -23,10 +24,13 @@ export class LoggerAdapter implements LoggerPort {
   }
 
   public withApp(app: LoggerAppEnum): LoggerPort {
-    return new LoggerAdapter(app, this.handle);
+    return new LoggerAdapter(app, this.handle, this.handleName);
   }
   public withHandle(handle: LoggerHandleEnum): LoggerPort {
-    return new LoggerAdapter(this.app, handle);
+    return new LoggerAdapter(this.app, handle, this.handleName);
+  }
+  public withHandleName(handleName: string): LoggerPort {
+    return new LoggerAdapter(this.app, this.handle, handleName);
   }
 
   private log(logLevel: string, message: string, meta?: Record<string, unknown>) {
@@ -50,6 +54,6 @@ export class LoggerAdapter implements LoggerPort {
   }
 
   private formatPrefix(): string {
-    return `[${this.app}] : [${this.handle}] - `;
+    return `[${this.app}] : [${this.handle} - ${this.handleName}] > `;
   }
 }

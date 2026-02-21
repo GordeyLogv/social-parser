@@ -9,4 +9,5 @@ export interface LoggerPort {
 
   withApp: (app: LoggerAppEnum) => LoggerPort;
   withHandle: (handle: LoggerHandleEnum) => LoggerPort;
+  withHandleName: (handleName: string) => LoggerPort;
 }
