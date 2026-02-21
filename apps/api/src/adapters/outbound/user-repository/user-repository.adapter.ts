@@ -21,6 +21,8 @@ export class UserRepositoryAdapter implements UserRepositoryPort {
         data: {
           telegramId: toProps.telegramId,
           firstName: toProps.firstName,
+          createdAt: toProps.createdAt,
+          updatedAt: toProps.updatedAt,
         },
       });
 

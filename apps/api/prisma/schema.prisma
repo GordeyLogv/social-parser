@@ -7,7 +7,9 @@ datasource db {
 }
 
 model User {
-  id         Int     @id @default(autoincrement())
-  telegramId BigInt  @unique
+  id         Int      @id @default(autoincrement())
+  telegramId BigInt   @unique
   firstName  String?
+  createdAt  DateTime
+  updatedAt  DateTime
 }
