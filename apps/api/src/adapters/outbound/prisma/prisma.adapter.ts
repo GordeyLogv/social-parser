@@ -1,10 +1,16 @@
-import { Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 
 import { PrismaClient } from '@prisma/client';
 
+import { LoggerPort } from '@app/core';
+
+import { TOKENS } from '../../../composition';
+
 @Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
-  private readonly logger = new Logger(PrismaService.name);
+export class PrismaAdapter extends PrismaClient implements OnModuleInit, OnModuleDestroy {
+  public constructor(@Inject(TOKENS.LoggerPort) private readonly logger: LoggerPort) {
+    super();
+  }
 
   public async onModuleInit(): Promise<void> {
     await this.$connect().catch((e) => {

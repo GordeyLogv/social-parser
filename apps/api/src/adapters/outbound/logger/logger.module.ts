@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 
-import { LoggerAdapter } from './logger.service';
+import { LoggerAdapter } from './logger.adapter';
 import { TOKENS } from '../../../composition';
 
 @Global()
