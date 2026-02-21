@@ -1,8 +1,9 @@
 import { NestFactory } from '@nestjs/core';
+import { ConsoleLogger } from '@nestjs/common';
+
+import { ZodValidationPipe } from 'nestjs-zod';
 
 import { AppModule } from './app/app.module';
-import { ConsoleLogger } from '@nestjs/common';
-import { ZodValidationPipe } from 'nestjs-zod';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

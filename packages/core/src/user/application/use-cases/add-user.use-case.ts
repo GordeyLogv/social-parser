@@ -28,7 +28,7 @@ export class AddUserUseCase {
         updatedAt: now,
       });
 
-      await this.userRepository.addUser(createdUser);
+      await this.userRepository.save(createdUser);
 
       this.logger.info(AddUserLoggingMessage.FINISHED, { createdUser });
     } catch (error) {
