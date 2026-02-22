@@ -12,15 +12,15 @@ export class UserRepositoryAdapter implements UserRepositoryPort {
   ) {}
 
   public async save(user: UserEntity): Promise<void> {
-    const toProps = user.toProps();
+    const toPrimitives = user.toPrimitives();
 
     try {
       await this.prisma.user.create({
         data: {
-          telegramId: toProps.telegramId,
-          firstName: toProps.firstName,
-          createdAt: toProps.createdAt,
-          updatedAt: toProps.updatedAt,
+          telegramId: toPrimitives.telegramId,
+          firstName: toPrimitives.firstName,
+          createdAt: toPrimitives.createdAt,
+          updatedAt: toPrimitives.updatedAt,
         },
       });
 

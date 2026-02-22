@@ -10,7 +10,7 @@ export class UserService {
     @Inject(TOKENS.AddUserUseCase) private readonly useCase: AddUserUseCase,
   ) {}
 
-  public async addUser(telegramId: bigint, firstName: string) {
+  public async addUser(telegramId: string, firstName?: string) {
     this.logger.info('start');
     await this.useCase.execute({ telegramId, firstName });
   }

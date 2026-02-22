@@ -1,4 +1,4 @@
 export interface AddUserInput {
-  telegramId: bigint;
+  telegramId: string;
   firstName?: string;
 }

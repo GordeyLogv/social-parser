@@ -1,0 +1,4 @@
+export enum FirstNameErrorCodes {
+  FIRST_NAME_TOO_LONG = 'FIRST_NAME_TOO_LONG',
+  FIRST_NAME_TOO_SHORT = 'FIRST_NAME_TOO_SHORT',
+}

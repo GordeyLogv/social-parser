@@ -1,9 +1,11 @@
-import { IUserProps } from './user.types';
+import { IUserProps, IUserPropsFactory, IUserPropsPrimitives } from './user.types';
+
+import { FirstNameVO, TelegramIdVO } from './value-objects';
 
 export class UserEntity {
   private readonly _id?: number;
-  private readonly _telegramId: bigint;
-  private _firstName: string;
+  private readonly _telegramId: TelegramIdVO;
+  private _firstName: FirstNameVO;
   private readonly createdAt: Date;
   private _updatedAt: Date;
 
@@ -15,8 +17,13 @@ export class UserEntity {
     this._updatedAt = props.updatedAt;
   }
 
-  public static createNew(props: Omit<IUserProps, 'id'>): UserEntity {
-    return new UserEntity(props);
+  public static createNew(props: IUserPropsFactory): UserEntity {
+    return new UserEntity({
+      telegramId: TelegramIdVO.create(props.telegramId),
+      firstName: FirstNameVO.create(props.firstName),
+      createdAt: props.createdAt,
+      updatedAt: props.updatedAt,
+    });
   }
 
   public static fromPersistence(props: IUserProps): UserEntity {
@@ -28,6 +35,16 @@ export class UserEntity {
       id: this._id,
       telegramId: this._telegramId,
       firstName: this._firstName,
+      createdAt: this.createdAt,
+      updatedAt: this._updatedAt,
+    };
+  }
+
+  public toPrimitives(): IUserPropsPrimitives {
+    return {
+      id: this._id,
+      telegramId: this._telegramId.value,
+      firstName: this._firstName.value,
       createdAt: this.createdAt,
       updatedAt: this._updatedAt,
     };

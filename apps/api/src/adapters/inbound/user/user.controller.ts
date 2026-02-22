@@ -17,8 +17,7 @@ export class UserController {
   @Post()
   public async addUser(@Body() dto: AddUserDto): Promise<void> {
     this.logger.info('start');
-    const telegramId = BigInt(dto.telegramId);
 
-    await this.userService.addUser(telegramId, dto.firstName);
+    await this.userService.addUser(dto.telegramId, dto.firstName);
   }
 }

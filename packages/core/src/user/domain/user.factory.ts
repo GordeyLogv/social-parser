@@ -1,8 +1,9 @@
 import { UserEntity } from './user.entity';
-import { IUserProps } from './user.types';
+
+import { IUserProps, IUserPropsFactory } from './user.types';
 
 export class UserFactory {
-  public static createNew(props: Omit<IUserProps, 'id'>): UserEntity {
+  public static createNew(props: IUserPropsFactory): UserEntity {
     return UserEntity.createNew(props);
   }
 
