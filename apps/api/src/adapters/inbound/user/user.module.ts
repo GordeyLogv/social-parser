@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common';
 
-import { AddUserUseCase, ClockPort, LoggerPort, UserRepositoryPort } from '@app/core';
-
 import { UserController } from './user.controller';
-import { UserService } from './user.service';
-
-import { TOKENS } from '../../../composition';
-
 import { UserRepositoryModule } from '../../outbound';
+import { TOKENS } from '../../../tokens';
+import { UserService } from './user.service';
+import { AddUserUseCase, ClockPort, LoggerAppEnum, LoggerHandleEnum, LoggerPort, UserRepositoryPort } from '@app/core';
 
 @Module({
   imports: [UserRepositoryModule],
@@ -15,10 +12,26 @@ import { UserRepositoryModule } from '../../outbound';
   providers: [
     UserService,
     {
+      provide: TOKENS.UserControllerLogging,
+      useFactory: (base: LoggerPort) => base.withHandle(LoggerHandleEnum.CONTROLLER).withHandleName(UserController.name),
+      inject: [TOKENS.LoggerPort],
+    },
+    {
+      provide: TOKENS.UserServiceLogging,
+      useFactory: (base: LoggerPort) => base.withHandle(LoggerHandleEnum.SERVICE).withHandleName(UserService.name),
+      inject: [TOKENS.LoggerPort],
+    },
+    {
+      provide: TOKENS.AddUserUseCaseLogging,
+      useFactory: (base: LoggerPort) =>
+        base.withApp(LoggerAppEnum.CORE).withHandle(LoggerHandleEnum.USECASE).withHandleName(AddUserUseCase.name),
+      inject: [TOKENS.LoggerPort],
+    },
+    {
       provide: TOKENS.AddUserUseCase,
-      useFactory: (logger: LoggerPort, userRepository: UserRepositoryPort, clock: ClockPort) =>
-        new AddUserUseCase(logger, userRepository, clock),
-      inject: [TOKENS.LoggerPort, TOKENS.UserRepositoryPort, TOKENS.ClockPort],
+      useFactory: (logger: LoggerPort, repository: UserRepositoryPort, clock: ClockPort) =>
+        new AddUserUseCase(logger, repository, clock),
+      inject: [TOKENS.AddUserUseCaseLogging, TOKENS.UserRepositoryPort, TOKENS.ClockPort],
     },
   ],
 })

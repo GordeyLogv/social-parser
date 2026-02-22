@@ -9,6 +9,11 @@ export const TOKENS = {
   PrismaLogging: Symbol.for('PrismaLogging'),
   UserRepositoryLogging: Symbol.for('UserRepositoryLogging'),
 
+  UserControllerLogging: Symbol.for('UserControllerLogging'),
+  UserServiceLogging: Symbol.for('UserServiceLogging'),
+
+  AddUserUseCaseLogging: Symbol.for('AddUserUseCaseLogging'),
+
   // Use-cases
   AddUserUseCase: Symbol.for('AddUserUseCase'),
 };
