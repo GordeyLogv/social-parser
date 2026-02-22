@@ -1,17 +1,24 @@
 import { Module } from '@nestjs/common';
 
-import { TOKENS } from '../../../composition';
+import { LoggerHandleEnum, LoggerPort } from '@app/core';
+
+import { TOKENS } from '../../../tokens';
 
 import { UserRepositoryAdapter } from './user-repository.adapter';
 
-import { LoggerPort } from '@app/core';
+import { PrismaAdapter } from '../prisma/prisma.adapter';
 
 @Module({
   providers: [
     {
-      provide: TOKENS.UserRepositoryPort,
-      useFactory: (logger: LoggerPort) => new UserRepositoryAdapter(logger, ),
+      provide: TOKENS.UserRepositoryLogging,
+      useFactory: (base: LoggerPort) => base.withHandle(LoggerHandleEnum.ADAPTER).withHandleName(UserRepositoryAdapter.name),
       inject: [TOKENS.LoggerPort],
+    },
+    {
+      provide: TOKENS.UserRepositoryPort,
+      useFactory: (logger: LoggerPort, prisma: PrismaAdapter) => new UserRepositoryAdapter(logger, prisma),
+      inject: [TOKENS.UserRepositoryLogging, PrismaAdapter],
     },
   ],
   exports: [TOKENS.UserRepositoryPort],

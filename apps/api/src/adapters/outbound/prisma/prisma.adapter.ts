@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 
 import { PrismaPg } from '@prisma/adapter-pg';
 
@@ -6,11 +6,9 @@ import { PrismaClient } from '@prisma/client';
 
 import { LoggerPort } from '@app/core';
 
-import { TOKENS } from '../../../composition';
-
 @Injectable()
 export class PrismaAdapter extends PrismaClient implements OnModuleInit, OnModuleDestroy {
-  public constructor(@Inject(TOKENS.LoggerPort) private readonly logger: LoggerPort) {
+  public constructor(private readonly logger: LoggerPort) {
     const connectionString = process.env.DATABASE_URL;
     const adapter = new PrismaPg({ connectionString });
 

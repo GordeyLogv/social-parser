@@ -1,9 +1,10 @@
 import { Global, Module } from '@nestjs/common';
 
-import { LoggerAdapter } from './logger.adapter';
-import { TOKENS } from '../../../composition';
 import { LoggerAppEnum, LoggerHandleEnum } from '@app/core';
 
+import { LoggerAdapter } from './logger.adapter';
+
+import { TOKENS } from '../../../tokens';
 @Global()
 @Module({
   providers: [

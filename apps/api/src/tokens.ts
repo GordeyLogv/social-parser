@@ -5,7 +5,9 @@ export const TOKENS = {
   UserRepositoryPort: Symbol.for('UserRepositoryPort'),
 
   // Logging
-  AdapterLogging: Symbol.for('AdapterLogging'),
+  ClockLogging: Symbol.for('ClockLogging'),
+  PrismaLogging: Symbol.for('PrismaLogging'),
+  UserRepositoryLogging: Symbol.for('UserRepositoryLogging'),
 
   // Use-cases
   AddUserUseCase: Symbol.for('AddUserUseCase'),

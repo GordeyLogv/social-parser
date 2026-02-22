@@ -1,15 +1,13 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { LoggerPort, UserEntity, UserRepositoryPort } from '@app/core';
 
 import { PrismaAdapter } from '../../outbound/prisma/prisma.adapter';
 
-import { TOKENS } from '../../../composition';
-
 @Injectable()
 export class UserRepositoryAdapter implements UserRepositoryPort {
   public constructor(
-    @Inject(TOKENS.LoggerPort) private readonly logger: LoggerPort,
+    private readonly logger: LoggerPort,
     private readonly prisma: PrismaAdapter,
   ) {}
 
