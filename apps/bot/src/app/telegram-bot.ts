@@ -1,8 +1,11 @@
 import { inject, injectable } from 'inversify';
-import { TOKENS } from '../tokens';
+
 import { Bot, Context } from 'grammy';
-import { StartCommand } from '../adapters';
+
 import { LoggerPort } from '@app/core';
+
+import { TOKENS } from '../tokens';
+import { StartCommand } from '../adapters';
 
 @injectable()
 export class TelegramBot {

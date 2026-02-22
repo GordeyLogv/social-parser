@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const AddUserRequestSchema = z.object({
   telegramId: z.string(),
-  firstName: z.string(),
+  firstName: z.optional(z.string()),
 });
 
 export const AddUserResponseSchema = z.void();

@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ClockPort } from '@app/core';
+import { ClockPort, LoggerPort } from '@app/core';
+import { inject } from 'inversify';
+import { TOKENS } from '../../../composition';
 
 @Injectable()
 export class ClockAdapter implements ClockPort {

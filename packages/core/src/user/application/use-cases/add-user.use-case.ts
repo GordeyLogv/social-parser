@@ -14,10 +14,7 @@ export class AddUserUseCase {
     private readonly userRepository: UserRepositoryPort,
     private readonly clock: ClockPort,
   ) {
-    this.logger = logger
-      .withApp(LoggerAppEnum.CORE)
-      .withHandle(LoggerHandleEnum.USECASE)
-      .withHandleName(AddUserUseCase.name);
+    this.logger.withApp(LoggerAppEnum.CORE).withHandle(LoggerHandleEnum.USECASE).withHandleName(AddUserUseCase.name);
   }
 
   public async execute(input: AddUserInput): Promise<void> {

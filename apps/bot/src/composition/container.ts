@@ -1,7 +1,7 @@
 import { ConfigPort, LoggerAppEnum, LoggerHandleEnum, LoggerPort } from '@app/core';
 import { Container } from 'inversify';
 import { TOKENS } from '../tokens';
-import { ConfigAdapter, LoggerAdapter } from '../adapters/outbound';
+import { ConfigAdapter, LoggerAdapter, UserApiAdapter, UserApiPort } from '../adapters/outbound';
 import { Bot, Context } from 'grammy';
 import { TelegramBot } from '../app/telegram-bot';
 import { StartCommand } from '../adapters/inbound/commands/start/start.command';
@@ -19,10 +19,17 @@ export const initContainer = (): Container => {
 
   container.bind<ConfigPort>(TOKENS.ConfigPort).to(ConfigAdapter).inSingletonScope();
 
+  container.bind<UserApiPort>(TOKENS.UserApiPort).to(UserApiAdapter).inSingletonScope();
+
   // Logging
   container
     .bind<LoggerPort>(TOKENS.ConfigLogger)
     .toDynamicValue((ctx) => ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandleName(ConfigAdapter.name))
+    .inSingletonScope();
+
+  container
+    .bind<LoggerPort>(TOKENS.UserApiLogger)
+    .toDynamicValue((ctx) => ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandleName(UserApiAdapter.name))
     .inSingletonScope();
 
   container

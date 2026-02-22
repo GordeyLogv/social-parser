@@ -1,7 +1,7 @@
 export interface IUserProps {
   id?: number;
   telegramId: bigint;
-  firstName: string;
+  firstName?: string;
   createdAt: Date;
   updatedAt: Date;
 }

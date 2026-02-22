@@ -4,11 +4,14 @@ import { TOKENS } from '../../../composition';
 
 import { UserRepositoryAdapter } from './user-repository.adapter';
 
+import { LoggerPort } from '@app/core';
+
 @Module({
   providers: [
     {
       provide: TOKENS.UserRepositoryPort,
-      useClass: UserRepositoryAdapter,
+      useFactory: (logger: LoggerPort) => new UserRepositoryAdapter(logger, ),
+      inject: [TOKENS.LoggerPort],
     },
   ],
   exports: [TOKENS.UserRepositoryPort],
