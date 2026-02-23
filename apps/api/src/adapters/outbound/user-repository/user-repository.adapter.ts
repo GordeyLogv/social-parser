@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
-import { LoggerPort, UserEntity, UserRepositoryPort } from '@app/core';
+import { Prisma } from '@prisma/client';
+
+import { LoggerPort, UserAlreadyExistsError, UserEntity, UserPersistenceFailedError, UserRepositoryPort } from '@app/core';
 
 import { PrismaAdapter } from '../../outbound/prisma/prisma.adapter';
 
@@ -26,8 +28,12 @@ export class UserRepositoryAdapter implements UserRepositoryPort {
 
       this.logger.info(`Пользователь создан`);
     } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code == 'P2002') {
+        this.logger.warn('Ошибка при создании пользоватля. Пользователь уже существует', { error: error });
+        throw new UserAlreadyExistsError();
+      }
       this.logger.error('Ошибка при создании пользователя', { error: error });
-      throw error;
+      throw new UserPersistenceFailedError();
     }
   }
 }

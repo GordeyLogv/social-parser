@@ -8,6 +8,7 @@ export const TOKENS = {
   ClockLogging: Symbol.for('ClockLogging'),
   PrismaLogging: Symbol.for('PrismaLogging'),
   UserRepositoryLogging: Symbol.for('UserRepositoryLogging'),
+  ExceptionFilterApiLogging: Symbol.for('ExceptionFilterApiLogging'),
 
   UserControllerLogging: Symbol.for('UserControllerLogging'),
   UserServiceLogging: Symbol.for('UserServiceLogging'),

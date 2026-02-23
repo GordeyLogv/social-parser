@@ -22,7 +22,9 @@ export class StartCommand {
         telegramId: String(ctx.msg.chat.id),
         firstName: ctx.msg.chat.first_name,
       };
-      await this.api.addUser(res);
+      const ress = await this.api.addUser(res);
+
+      console.log(ress);
 
       this.logger.info(`TelegramId: ${res.telegramId}, firstName: ${res.firstName}`);
 
