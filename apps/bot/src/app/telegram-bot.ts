@@ -5,15 +5,16 @@ import { Bot, Context } from 'grammy';
 import { LoggerPort } from '@app/core';
 
 import { TOKENS } from '../tokens';
-import { StartCommand } from '../adapters';
 import { CommandsRegistryHelper } from '../common';
+import { ExceptionFilterAdapter } from '../adapters';
 
 @injectable()
 export class TelegramBot {
   public constructor(
     @inject(TOKENS.Grammy) private readonly bot: Bot<Context>,
 
-    @inject(TOKENS.TelegramBotLogger) private logger: LoggerPort,
+    @inject(TOKENS.TelegramBotLogger) private readonly logger: LoggerPort,
+    @inject(TOKENS.ExceptionFilterPort) private readonly exceptionFilter: ExceptionFilterAdapter,
 
     @inject(TOKENS.CommandsRegistry) private commands: CommandsRegistryHelper,
   ) {
@@ -30,7 +31,9 @@ export class TelegramBot {
 
   private useCallbackQueries() {}
 
-  private useExceptionFilter() {}
+  private useExceptionFilter() {
+    this.bot.catch(async ({ error, ctx }) => this.exceptionFilter.handle(error, ctx));
+  }
 
   public async init() {
     this.useMiddlewares();

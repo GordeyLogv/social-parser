@@ -11,6 +11,7 @@ export const TOKENS = {
   StartCommandLogger: Symbol.for('StartCommandLogger'),
   TelegramBotLogger: Symbol.for('TelegramBotLogger'),
   CommandsRegistryLogger: Symbol.for('CommandsRegistryLogger'),
+  ExceptionFilterLogger: Symbol.for('ExceptionFilterLogger'),
 
   // Commands
   ICommand: Symbol.for('ICommand'),

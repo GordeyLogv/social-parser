@@ -36,6 +36,7 @@ export class StartCommand implements ICommand {
             error: { code: error.code, message: error.message },
           });
         }
+        throw error;
       }
 
       await ctx.reply(startMessage(res.firstName ?? 'Anonymous'), { reply_markup: menuKeyboard() });

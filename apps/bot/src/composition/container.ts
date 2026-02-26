@@ -7,6 +7,7 @@ import { TelegramBot } from '../app/telegram-bot';
 import { StartCommand } from '../adapters/inbound/commands/start/start.command';
 import { ICommand } from '../adapters';
 import { CommandsRegistryHelper } from '../common';
+import { ExceptionFilterAdapter } from '../adapters/inbound/exception-filter/exception-filter.adapter';
 
 export const initContainer = (): Container => {
   const container = new Container();
@@ -18,6 +19,8 @@ export const initContainer = (): Container => {
       return new LoggerAdapter(LoggerAppEnum.BOT, LoggerHandleEnum.ADAPTER, LoggerAdapter.name);
     })
     .inSingletonScope();
+
+  container.bind<ExceptionFilterAdapter>(TOKENS.ExceptionFilterPort).to(ExceptionFilterAdapter).inSingletonScope();
 
   container.bind<ConfigPort>(TOKENS.ConfigPort).to(ConfigAdapter).inSingletonScope();
 
@@ -52,6 +55,15 @@ export const initContainer = (): Container => {
     .bind<LoggerPort>(TOKENS.CommandsRegistryLogger)
     .toDynamicValue((ctx) =>
       ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandle(LoggerHandleEnum.HELPER).withHandleName(CommandsRegistryHelper.name),
+    );
+
+  container
+    .bind<LoggerPort>(TOKENS.ExceptionFilterLogger)
+    .toDynamicValue((ctx) =>
+      ctx
+        .get<LoggerPort>(TOKENS.LoggerPort)
+        .withHandle(LoggerHandleEnum.EXCEPTION_FILTER)
+        .withHandleName(ExceptionFilterAdapter.name),
     );
 
   // Commands
