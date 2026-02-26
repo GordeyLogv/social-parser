@@ -6,13 +6,16 @@ import { LoggerPort } from '@app/core';
 
 import { TOKENS } from '../tokens';
 import { StartCommand } from '../adapters';
+import { CommandsRegistryHelper } from '../common';
 
 @injectable()
 export class TelegramBot {
   public constructor(
-    @inject(TOKENS.TelegramBotLogger) private logger: LoggerPort,
     @inject(TOKENS.Grammy) private readonly bot: Bot<Context>,
-    @inject(TOKENS.StartCommand) private readonly startCommand: StartCommand,
+
+    @inject(TOKENS.TelegramBotLogger) private logger: LoggerPort,
+
+    @inject(TOKENS.CommandsRegistry) private commands: CommandsRegistryHelper,
   ) {
     this.logger.info('Bot init');
   }
@@ -22,7 +25,7 @@ export class TelegramBot {
   private useListenersMessage() {}
 
   private useCommands() {
-    this.startCommand.register(this.bot);
+    this.commands.registryAllCommands(this.bot);
   }
 
   private useCallbackQueries() {}

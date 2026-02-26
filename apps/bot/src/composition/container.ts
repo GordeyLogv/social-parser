@@ -5,6 +5,8 @@ import { ConfigAdapter, LoggerAdapter, UserApiAdapter, UserApiPort } from '../ad
 import { Bot, Context } from 'grammy';
 import { TelegramBot } from '../app/telegram-bot';
 import { StartCommand } from '../adapters/inbound/commands/start/start.command';
+import { ICommand } from '../adapters';
+import { CommandsRegistryHelper } from '../common';
 
 export const initContainer = (): Container => {
   const container = new Container();
@@ -46,8 +48,15 @@ export const initContainer = (): Container => {
     )
     .inSingletonScope();
 
+  container
+    .bind<LoggerPort>(TOKENS.CommandsRegistryLogger)
+    .toDynamicValue((ctx) =>
+      ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandle(LoggerHandleEnum.HELPER).withHandleName(CommandsRegistryHelper.name),
+    );
+
   // Commands
-  container.bind<StartCommand>(TOKENS.StartCommand).to(StartCommand).inSingletonScope();
+  container.bind<ICommand>(TOKENS.ICommand).to(StartCommand).inSingletonScope();
+  container.bind<CommandsRegistryHelper>(TOKENS.CommandsRegistry).to(CommandsRegistryHelper).inSingletonScope();
 
   container
     .bind<Bot<Context>>(TOKENS.Grammy)

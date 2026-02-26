@@ -8,9 +8,10 @@ import { TOKENS } from '../../../../tokens';
 import { UserApiPort } from '../../../outbound';
 import { startMessage, ApiError } from '../../../../common';
 import { menuKeyboard } from '../../keyboards';
+import { ICommand } from '../command.interface';
 
 @injectable()
-export class StartCommand {
+export class StartCommand implements ICommand {
   public constructor(
     @inject(TOKENS.StartCommandLogger) private logger: LoggerPort,
     @inject(TOKENS.UserApiPort) private readonly api: UserApiPort,

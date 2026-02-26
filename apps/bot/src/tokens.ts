@@ -10,9 +10,11 @@ export const TOKENS = {
   UserApiLogger: Symbol.for('UserApiLogger'),
   StartCommandLogger: Symbol.for('StartCommandLogger'),
   TelegramBotLogger: Symbol.for('TelegramBotLogger'),
+  CommandsRegistryLogger: Symbol.for('CommandsRegistryLogger'),
 
   // Commands
-  StartCommand: Symbol.for('StartCommand'),
+  ICommand: Symbol.for('ICommand'),
+  CommandsRegistry: Symbol.for('CommandsRegistry'),
 
   Grammy: Symbol.for('Grammy'),
 

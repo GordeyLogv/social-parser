@@ -10,4 +10,5 @@ export enum LoggerHandleEnum {
   CALLBACK = 'CallbackQuery',
   LISTENER = 'Listener',
   EXCEPTION_FILTER = 'Exception filter',
+  HELPER = 'Helper',
 }
