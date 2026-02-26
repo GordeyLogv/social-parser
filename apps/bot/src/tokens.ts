@@ -14,6 +14,7 @@ export const TOKENS = {
 
   StartCommandLogger: Symbol.for('StartCommandLogger'),
 
+  MenuCallbackQueryLogger: Symbol.for('MenuCallbackQueryLogger'),
   HelpCallbackQueryLogger: Symbol.for('HelpCallbackQueryLogger'),
 
   CommandsRegistryLogger: Symbol.for('CommandsRegistryLogger'),

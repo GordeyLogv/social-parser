@@ -12,6 +12,7 @@ import { StartCommand, ExceptionFilterAdapter, HelpCallbackQuery, ICallbackQuery
 import { CallbackQueriesRegistryHelper, CommandsRegistryHelper } from '../common';
 
 import { TelegramBot } from '../app/telegram-bot';
+import { MenuCallbackQuery } from '../adapters/inbound/callback-queries/menu/menu.callback-query';
 
 export const initContainer = (): Container => {
   const container = new Container();
@@ -58,6 +59,11 @@ export const initContainer = (): Container => {
     );
 
   container
+    .bind<LoggerPort>(TOKENS.MenuCallbackQueryLogger)
+    .toDynamicValue((ctx) =>
+      ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandle(LoggerHandleEnum.CALLBACK).withHandleName(MenuCallbackQuery.name),
+    );
+  container
     .bind<LoggerPort>(TOKENS.HelpCallbackQueryLogger)
     .toDynamicValue((ctx) =>
       ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandle(LoggerHandleEnum.CALLBACK).withHandleName(HelpCallbackQuery.name),
@@ -83,6 +89,7 @@ export const initContainer = (): Container => {
   container.bind<CommandsRegistryHelper>(TOKENS.CommandsRegistryHelper).to(CommandsRegistryHelper).inSingletonScope();
 
   // CallbackQueries
+  container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(MenuCallbackQuery).inSingletonScope();
   container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(HelpCallbackQuery).inSingletonScope();
   container
     .bind<CallbackQueriesRegistryHelper>(TOKENS.CallbackQueriesRegistryHelper)
