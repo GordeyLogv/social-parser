@@ -5,7 +5,7 @@ import { Bot, Context } from 'grammy';
 import { LoggerPort } from '@app/core';
 
 import { TOKENS } from '../tokens';
-import { CommandsRegistryHelper } from '../common';
+import { CallbackQueriesRegistryHelper, CommandsRegistryHelper } from '../common';
 import { ExceptionFilterAdapter } from '../adapters';
 
 @injectable()
@@ -16,7 +16,8 @@ export class TelegramBot {
     @inject(TOKENS.TelegramBotLogger) private readonly logger: LoggerPort,
     @inject(TOKENS.ExceptionFilterPort) private readonly exceptionFilter: ExceptionFilterAdapter,
 
-    @inject(TOKENS.CommandsRegistry) private commands: CommandsRegistryHelper,
+    @inject(TOKENS.CommandsRegistryHelper) private readonly commands: CommandsRegistryHelper,
+    @inject(TOKENS.CallbackQueriesRegistryHelper) private readonly callbackQueries: CallbackQueriesRegistryHelper,
   ) {
     this.logger.info('Bot init');
   }
@@ -29,7 +30,9 @@ export class TelegramBot {
     this.commands.registryAllCommands(this.bot);
   }
 
-  private useCallbackQueries() {}
+  private useCallbackQueries() {
+    this.callbackQueries.registryAllCallbackQueries(this.bot);
+  }
 
   private useExceptionFilter() {
     this.bot.catch(async ({ error, ctx }) => this.exceptionFilter.handle(error, ctx));

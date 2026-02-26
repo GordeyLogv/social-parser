@@ -25,7 +25,7 @@ export class UserApiAdapter implements UserApiPort {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ telegramId: '23454323231177', firstName: 'w' }),
+      body: JSON.stringify(input),
     });
 
     if (res.ok) return;

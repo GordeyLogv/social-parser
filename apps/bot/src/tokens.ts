@@ -6,16 +6,26 @@ export const TOKENS = {
   UserApiPort: Symbol.for('UserApiPort'),
 
   // Logging
-  ConfigLogger: Symbol.for('ConfigLogger'),
-  UserApiLogger: Symbol.for('UserApiLogger'),
-  StartCommandLogger: Symbol.for('StartCommandLogger'),
   TelegramBotLogger: Symbol.for('TelegramBotLogger'),
-  CommandsRegistryLogger: Symbol.for('CommandsRegistryLogger'),
+
+  ConfigLogger: Symbol.for('ConfigLogger'),
   ExceptionFilterLogger: Symbol.for('ExceptionFilterLogger'),
+  UserApiLogger: Symbol.for('UserApiLogger'),
+
+  StartCommandLogger: Symbol.for('StartCommandLogger'),
+
+  HelpCallbackQueryLogger: Symbol.for('HelpCallbackQueryLogger'),
+
+  CommandsRegistryLogger: Symbol.for('CommandsRegistryLogger'),
+  CallbackQueriesRegistryLogger: Symbol.for('CallbackQueriesRegistryLogger'),
 
   // Commands
   ICommand: Symbol.for('ICommand'),
-  CommandsRegistry: Symbol.for('CommandsRegistry'),
+  CommandsRegistryHelper: Symbol.for('CommandsRegistry'),
+
+  // CallbackQueries
+  ICallbackQuery: Symbol.for('ICallbackQuery'),
+  CallbackQueriesRegistryHelper: Symbol.for('CallbackQueriesRegistryHelper'),
 
   Grammy: Symbol.for('Grammy'),
 
