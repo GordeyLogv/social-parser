@@ -6,6 +6,8 @@ import { LoggerPort } from '@app/core';
 
 import { TOKENS } from '../../../../tokens';
 import { UserApiPort } from '../../../outbound';
+import { startMessage, ApiError } from '../../../../common';
+import { menuKeyboard } from '../../keyboards';
 
 @injectable()
 export class StartCommand {
@@ -22,13 +24,20 @@ export class StartCommand {
         telegramId: String(ctx.msg.chat.id),
         firstName: ctx.msg.chat.first_name,
       };
-      const ress = await this.api.addUser(res);
 
-      console.log(ress);
+      try {
+        await this.api.addUser(res);
+        this.logger.info('Пользователь валидный', { user: { telegramId: res.telegramId, firstName: res.firstName } });
+      } catch (error) {
+        if (error instanceof ApiError) {
+          this.logger.warn('Пользоватль невалидный', {
+            user: { telegramId: res.telegramId, firstName: res.firstName },
+            error: { code: error.code, message: error.message },
+          });
+        }
+      }
 
-      this.logger.info(`TelegramId: ${res.telegramId}, firstName: ${res.firstName}`);
-
-      await ctx.reply('Привте');
+      await ctx.reply(startMessage(res.firstName ?? 'Anonymous'), { reply_markup: menuKeyboard() });
     });
   }
 }

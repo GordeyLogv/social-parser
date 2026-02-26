@@ -1,10 +1,11 @@
-import { ArgumentsHost, Catch, ExceptionFilter, Inject } from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 
 import { Response } from 'express';
 
-import { LoggerPort } from '@app/core';
+import { LoggerPort, NormalizedError } from '@app/core';
 
 import { normalizedErrorHelper } from './normalized-error.helper';
+
 import { ERROR_STATUS_MAP } from './status-code.map';
 
 @Catch()
@@ -33,19 +34,19 @@ export class ExceptionFilterApi implements ExceptionFilter {
         break;
     }
 
-    const res = {
+    const res: NormalizedError = {
       type: normalizedError.type,
       code: normalizedError.code,
       message: normalizedError.message,
-      time: new Date().toISOString(),
+      logLevel: normalizedError.logLevel,
     };
 
     switch (normalizedError.logLevel) {
       case 'error':
-        this.logger.error(`${res.type} : [${res.code}] - ${res.message} _${res.time}_`);
+        this.logger.error(`${res.message}`, { info: res });
         break;
       case 'warn':
-        this.logger.warn(`${res.type} : [${res.code}] - ${res.message} _${res.time}_`);
+        this.logger.warn(`${res.message}`, { info: res });
         break;
     }
 
