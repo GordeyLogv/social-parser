@@ -7,12 +7,18 @@ import { ConfigPort, LoggerAppEnum, LoggerHandleEnum, LoggerPort } from '@app/co
 import { TOKENS } from '../tokens';
 
 import { ConfigAdapter, LoggerAdapter, UserApiAdapter, UserApiPort } from '../adapters/outbound';
-import { StartCommand, ExceptionFilterAdapter, HelpCallbackQuery, ICallbackQuery, ICommand } from '../adapters/inbound';
+import {
+  StartCommand,
+  ExceptionFilterAdapter,
+  HelpCallbackQuery,
+  ICallbackQuery,
+  ICommand,
+  MenuCallbackQuery,
+} from '../adapters/inbound';
 
 import { CallbackQueriesRegistryHelper, CommandsRegistryHelper } from '../common';
 
 import { TelegramBot } from '../app/telegram-bot';
-import { MenuCallbackQuery } from '../adapters/inbound/callback-queries/menu/menu.callback-query';
 
 export const initContainer = (): Container => {
   const container = new Container();
@@ -40,7 +46,8 @@ export const initContainer = (): Container => {
         .get<LoggerPort>(TOKENS.LoggerPort)
         .withHandle(LoggerHandleEnum.EXCEPTION_FILTER)
         .withHandleName(ExceptionFilterAdapter.name),
-    );
+    )
+    .inSingletonScope();
   container
     .bind<LoggerPort>(TOKENS.UserApiLogger)
     .toDynamicValue((ctx) => ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandleName(UserApiAdapter.name))
@@ -56,18 +63,21 @@ export const initContainer = (): Container => {
     .bind<LoggerPort>(TOKENS.CommandsRegistryLogger)
     .toDynamicValue((ctx) =>
       ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandle(LoggerHandleEnum.HELPER).withHandleName(CommandsRegistryHelper.name),
-    );
+    )
+    .inSingletonScope();
 
   container
     .bind<LoggerPort>(TOKENS.MenuCallbackQueryLogger)
     .toDynamicValue((ctx) =>
       ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandle(LoggerHandleEnum.CALLBACK).withHandleName(MenuCallbackQuery.name),
-    );
+    )
+    .inSingletonScope();
   container
     .bind<LoggerPort>(TOKENS.HelpCallbackQueryLogger)
     .toDynamicValue((ctx) =>
       ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandle(LoggerHandleEnum.CALLBACK).withHandleName(HelpCallbackQuery.name),
-    );
+    )
+    .inSingletonScope();
   container
     .bind<LoggerPort>(TOKENS.CallbackQueriesRegistryLogger)
     .toDynamicValue((ctx) =>
@@ -75,7 +85,8 @@ export const initContainer = (): Container => {
         .get<LoggerPort>(TOKENS.LoggerPort)
         .withHandle(LoggerHandleEnum.HELPER)
         .withHandleName(CallbackQueriesRegistryHelper.name),
-    );
+    )
+    .inSingletonScope();
 
   container
     .bind<LoggerPort>(TOKENS.TelegramBotLogger)
