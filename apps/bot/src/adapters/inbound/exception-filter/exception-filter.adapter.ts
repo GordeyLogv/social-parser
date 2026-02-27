@@ -6,7 +6,8 @@ import { LoggerPort } from '@app/core';
 
 import { TOKENS } from '../../../tokens';
 import { normalizedErrorHelper, ExceptionFilterPort } from '../../../common';
-import { ErrorMessageMapper } from './error-message.mapper';
+
+import { ErrorCodeToMessageMapper } from './error-code-to-message.mapper';
 
 @injectable()
 export class ExceptionFilterAdapter implements ExceptionFilterPort {
@@ -15,7 +16,7 @@ export class ExceptionFilterAdapter implements ExceptionFilterPort {
   public async handle(error: unknown, ctx: Context): Promise<void> {
     const normalizedError = normalizedErrorHelper(error);
 
-    const errorMessageMapped = ErrorMessageMapper[normalizedError.message];
+    const errorMessageMapped = ErrorCodeToMessageMapper[normalizedError.code] ?? 'Что то пошло не так, попробуйсте позже';
 
     switch (normalizedError.logLevel) {
       case 'warn':
