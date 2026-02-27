@@ -10,6 +10,10 @@ export class TelegramIdVO {
   public static create(value: string): TelegramIdVO {
     const trimmed = value.trim();
 
+    if (trimmed === '') {
+      throw new TelegramIdInvalidError();
+    }
+
     let parsed: bigint;
     try {
       parsed = BigInt(trimmed);

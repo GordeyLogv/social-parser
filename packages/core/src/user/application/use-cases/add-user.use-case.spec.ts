@@ -45,8 +45,13 @@ describe('AddUserUseCase', () => {
     }
   }
 
-  const mockInput = {
+  const mockValidInput = {
     telegramId: '123456789',
+    firstName: 'Gordey',
+  };
+
+  const mockInValidInput = {
+    telegramId: 'invalid id',
     firstName: 'Gordey',
   };
 
@@ -56,7 +61,7 @@ describe('AddUserUseCase', () => {
     clock.at.mockReturnValue(now);
     userRepository.save.mockResolvedValue(undefined);
 
-    await useCase.execute(mockInput);
+    await useCase.execute(mockValidInput);
 
     const savedUser = userRepository.save.mock.calls[0][0];
 
@@ -79,12 +84,7 @@ describe('AddUserUseCase', () => {
 
     clock.at.mockReturnValue(now);
 
-    await expect(
-      useCase.execute({
-        telegramId: 'not valid id',
-        firstName: 'Gordey',
-      }),
-    ).rejects.toBeInstanceOf(DomainError);
+    await expect(useCase.execute(mockInValidInput)).rejects.toBeInstanceOf(DomainError);
 
     expect(logger.info).toHaveBeenCalledTimes(1);
 
@@ -102,7 +102,7 @@ describe('AddUserUseCase', () => {
     clock.at.mockReturnValue(now);
     userRepository.save.mockRejectedValue(appTestError);
 
-    await expect(useCase.execute(mockInput)).rejects.toBeInstanceOf(ApplicationError);
+    await expect(useCase.execute(mockValidInput)).rejects.toBeInstanceOf(ApplicationError);
 
     expect(logger.info).toHaveBeenCalledTimes(1);
     expect(logger.warn).toHaveBeenCalledTimes(1);
@@ -117,7 +117,7 @@ describe('AddUserUseCase', () => {
     clock.at.mockReturnValue(now);
     userRepository.save.mockRejectedValue(unknownTestError);
 
-    await expect(useCase.execute(mockInput)).rejects.toBe(unknownTestError);
+    await expect(useCase.execute(mockValidInput)).rejects.toBe(unknownTestError);
 
     expect(logger.info).toHaveBeenCalledTimes(1);
     expect(logger.error).toHaveBeenCalledTimes(1);
