@@ -19,7 +19,7 @@ describe('TelegramIdVO', () => {
     expect(() => TelegramIdVO.create('dsfghds')).toThrow(TelegramIdInvalidError);
   });
 
-  it('Should thoew TelegramIdInvalidError when input value empty string', () => {
+  it('Should throw TelegramIdInvalidError when input value empty string', () => {
     expect(() => TelegramIdVO.create('   ')).toThrow(TelegramIdInvalidError);
   });
 });

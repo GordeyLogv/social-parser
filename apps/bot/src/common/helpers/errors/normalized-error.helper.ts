@@ -1,6 +1,8 @@
-import { NormalizedError } from '@app/core';
-import { ApiError } from '../../errors';
 import { GrammyError, HttpError } from 'grammy';
+
+import { NormalizedError } from '@app/core';
+
+import { ApiError } from '../../errors';
 
 export const normalizedErrorHelper = (error: unknown): NormalizedError => {
   if (error instanceof ApiError) {
@@ -24,7 +26,7 @@ export const normalizedErrorHelper = (error: unknown): NormalizedError => {
   if (error instanceof GrammyError) {
     return {
       type: 'infra',
-      code: error.name,
+      code: 'GRAMMY_ERROR',
       message: 'Grammy error',
       logLevel: 'error',
     };
