@@ -1,4 +1,4 @@
-import { ApplicationError, FirstNameTooLongError, LoggerPort, UserAlreadyExistsError } from '@app/core';
+import { ApplicationError, DomainError, FirstNameTooLongError, LoggerPort, UserAlreadyExistsError } from '@app/core';
 
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
@@ -52,19 +52,23 @@ describe('UserController', () => {
     it('Should log and rethrow when UserService throw domain error', async () => {
       service.addUser.mockRejectedValue(new FirstNameTooLongError());
 
-      await expect(controller.addUser(testDto)).rejects.toThrow();
+      await expect(controller.addUser(testDto)).rejects.toBeInstanceOf(DomainError);
+
+      expect(logger.info).toHaveBeenCalled();
     });
 
     it('Should log and rethrow when UserService throw application error', async () => {
       service.addUser.mockRejectedValue(new UserAlreadyExistsError());
 
-      await expect(controller.addUser(testDto)).rejects.toThrow();
+      await expect(controller.addUser(testDto)).rejects.toBeInstanceOf(ApplicationError);
+      expect(logger.info).toHaveBeenCalled();
     });
 
     it('Should log and rethrow when UserService throw unknown error', async () => {
       service.addUser.mockRejectedValue(new Error('Test unknown error'));
 
-      await expect(controller.addUser(testDto)).rejects.toThrow();
+      await expect(controller.addUser(testDto)).rejects.toBeInstanceOf(Error);
+      expect(logger.info).toHaveBeenCalled();
     });
   });
 });
