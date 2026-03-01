@@ -1,4 +1,4 @@
-import { ApplicationError, DomainError, LoggerAppEnum, LoggerHandleEnum, LoggerPort } from '../../../shared';
+import { ApplicationError, DomainError, LoggerAppEnum, LoggerHandleEnum, LoggerPort, ClockPort } from '../../../shared';
 
 import { UserFactory } from '../../domain';
 
@@ -6,7 +6,7 @@ import { AddUserInput } from '../../contracts';
 
 import { AddUserLoggingMessage } from '../messages/add-user';
 
-import { UserRepositoryPort, ClockPort } from '../ports';
+import { UserRepositoryPort } from '../ports';
 
 export class AddUserUseCase {
   constructor(

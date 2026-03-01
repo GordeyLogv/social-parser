@@ -7,9 +7,30 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  telegramId BigInt   @unique
+  id         Int     @id @default(autoincrement())
+  telegramId BigInt  @unique
   firstName  String?
-  createdAt  DateTime
-  updatedAt  DateTime
+
+  accounts Account[]
+
+  createdAt DateTime
+  updatedAt DateTime
+}
+
+model Account {
+  id Int @id @default(autoincrement())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  platform     String
+  handle       String
+  url          String    @unique
+  syncedStatus String
+  lastSyncedAt DateTime?
+  createdAt    DateTime
+  updatedAt    DateTime
+
+  @@index([userId])
+  @@index([platform, handle])
 }

@@ -1,6 +1,6 @@
 export enum AddUserLoggingMessage {
-  START = `start`,
-  FAILED = `failed`,
-  UNKNOWN_ERROR = `failed, unknown error`,
-  FINISHED = `finished`,
+  START = `Start use case`,
+  FAILED = `Failed use case`,
+  UNKNOWN_ERROR = `Failed use case, unknown error`,
+  FINISHED = `Finished use case`,
 }
