@@ -1,0 +1,4 @@
+export enum AccountPlatformErrorCodes {
+  INVALID_PLATFORM = 'INVALID_PLATFORM',
+  NOT_SUPPORTED_PLATFORM = 'NOT_SUPPORTED_PLATFORM',
+}

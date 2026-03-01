@@ -1,0 +1,5 @@
+export enum AccountHandleErrorCodes {
+  INVALID_HANDLE = 'INVALID_HANDLE',
+  HANDLE_TO_SHORT = 'HANDLE_TO_SHORT',
+  HANDLE_TO_LONG = 'HANDLE_TO_LONG',
+}
