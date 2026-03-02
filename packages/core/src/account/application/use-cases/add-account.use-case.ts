@@ -6,7 +6,6 @@ import { AddAccountInput } from '../../contracts';
 
 import { AccountRepositoryPort } from '../ports';
 import { AddAccountLoggingMessage } from '../messages/add-account';
-import { AccountDuplicateUrlError } from '../errors';
 
 export class AddAccountUseCase {
   public constructor(
