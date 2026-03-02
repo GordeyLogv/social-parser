@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { AddUserUseCase, LoggerPort } from '@app/core';
+
 import { TOKENS } from '../../../tokens';
 
 @Injectable()

@@ -1,6 +1,6 @@
-import { ApplicationError, DomainError, LoggerPort } from '../../../shared';
+import { ApplicationError, DomainError, LoggerPort, ClockPort } from '../../../shared';
 
-import { ClockPort, UserRepositoryPort } from '../ports';
+import { UserRepositoryPort } from '../ports';
 import { AddUserUseCase } from './add-user.use-case';
 
 describe('AddUserUseCase', () => {

@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { AccountModule, PrismaModule, UserModule, LoggerModule, ClockModule } from '../adapters';
+import { AccountModule, PrismaModule, UserModule, LoggerModule, ClockModule, ExceptionFilterApiModule } from '../adapters';
 
 import { configRoot } from '../common/configs';
-import { ExceptionFilterApiModule } from '../adapters/inbound/exception-filter/exception-filter-api.module';
 
 @Module({
   imports: [
@@ -13,6 +12,7 @@ import { ExceptionFilterApiModule } from '../adapters/inbound/exception-filter/e
     ExceptionFilterApiModule,
     LoggerModule,
     ClockModule,
+
     UserModule,
     AccountModule,
   ],
