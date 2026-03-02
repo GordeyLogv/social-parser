@@ -15,7 +15,11 @@ export class AccountController {
   ) {}
 
   @Post('/search')
-  public async searchAccount(@Body() dto: SearchAccountDto): Promise<SearchAccountResponse> {}
+  public async searchAccount(@Body() dto: SearchAccountDto): Promise<SearchAccountResponse> {
+    this.logger.info('Start', { dto });
+
+    return await this.service.searchAccount(dto);
+  }
 
   @Post()
   public async addAccount(@Body() dto: ConfirmAccountDto): Promise<ConfirmAccountResponse> {}

@@ -1,4 +1,4 @@
-import { ApplicationError, DomainError, LoggerAppEnum, LoggerHandleEnum, LoggerPort, ClockPort } from '../../../shared';
+import { ApplicationError, DomainError, LoggerPort, ClockPort } from '../../../shared';
 
 import { UserFactory } from '../../domain';
 
@@ -13,9 +13,7 @@ export class AddUserUseCase {
     private readonly logger: LoggerPort,
     private readonly userRepository: UserRepositoryPort,
     private readonly clock: ClockPort,
-  ) {
-    this.logger.withApp(LoggerAppEnum.CORE).withHandle(LoggerHandleEnum.USECASE).withHandleName(AddUserUseCase.name);
-  }
+  ) {}
 
   public async execute(input: AddUserInput): Promise<void> {
     this.logger.info(AddUserLoggingMessage.START, { input });
@@ -30,7 +28,7 @@ export class AddUserUseCase {
         updatedAt: now,
       });
 
-      await this.userRepository.save(createdUser);
+      await this.userRepository.save(createdUser.toPrimitives());
 
       this.logger.info(AddUserLoggingMessage.FINISHED, { createdUser });
     } catch (error) {

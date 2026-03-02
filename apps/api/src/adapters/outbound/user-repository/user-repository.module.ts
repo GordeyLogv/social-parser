@@ -12,7 +12,8 @@ import { PrismaAdapter } from '../prisma/prisma.adapter';
   providers: [
     {
       provide: TOKENS.UserRepositoryLogging,
-      useFactory: (base: LoggerPort) => base.withHandle(LoggerHandleEnum.ADAPTER).withHandleName(UserRepositoryAdapter.name),
+      useFactory: (base: LoggerPort) =>
+        base.withHandle(LoggerHandleEnum.REPOSITORY).withHandleName(UserRepositoryAdapter.name),
       inject: [TOKENS.LoggerPort],
     },
     {

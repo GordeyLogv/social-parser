@@ -26,8 +26,14 @@ export class UserEntity {
     });
   }
 
-  public static fromPersistence(props: IUserProps): UserEntity {
-    return new UserEntity(props);
+  public static fromPersistence(props: IUserPropsPrimitives): UserEntity {
+    return new UserEntity({
+      id: props.id,
+      telegramId: TelegramIdVO.persistence(props.telegramId),
+      firstName: FirstNameVO.create(props.firstName),
+      createdAt: props.createdAt,
+      updatedAt: props.updatedAt,
+    });
   }
 
   public toProps(): IUserProps {

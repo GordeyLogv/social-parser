@@ -1,13 +1,13 @@
 import { UserEntity } from './user.entity';
 
-import { IUserProps, IUserPropsFactory } from './user.types';
+import { IUserPropsFactory, IUserPropsPrimitives } from './user.types';
 
 export class UserFactory {
   public static createNew(props: IUserPropsFactory): UserEntity {
     return UserEntity.createNew(props);
   }
 
-  public static fromPersistence(props: IUserProps): UserEntity {
+  public static fromPersistence(props: IUserPropsPrimitives): UserEntity {
     return UserEntity.fromPersistence(props);
   }
 }

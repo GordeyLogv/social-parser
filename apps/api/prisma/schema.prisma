@@ -7,9 +7,9 @@ datasource db {
 }
 
 model User {
-  id         Int     @id @default(autoincrement())
-  telegramId BigInt  @unique
-  firstName  String?
+  id         Int    @id @default(autoincrement())
+  telegramId BigInt @unique
+  firstName  String
 
   accounts Account[]
 

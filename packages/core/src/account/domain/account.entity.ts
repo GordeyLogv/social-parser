@@ -4,7 +4,7 @@ import { AccountHandleVO, AccountPlatformVO } from './value-objects';
 
 export class AccountEntity {
   private readonly _id?: number;
-  private readonly _userId: number;
+  private readonly _userId: bigint;
   private readonly _platform: AccountPlatformVO;
   private readonly _handle: AccountHandleVO;
   private readonly _url: string;

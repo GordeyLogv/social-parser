@@ -5,7 +5,7 @@ import { AddUserUseCase } from './add-user.use-case';
 
 describe('AddUserUseCase', () => {
   let logger: jest.Mocked<LoggerPort>;
-  let userRepository: jest.Mocked<UserRepositoryPort>;
+  let userRepository: jest.Mocked<Omit<UserRepositoryPort, 'findUser'>>;
   let clock: jest.Mocked<ClockPort>;
 
   let useCase: AddUserUseCase;
@@ -34,7 +34,7 @@ describe('AddUserUseCase', () => {
       at: jest.fn(),
     };
 
-    useCase = new AddUserUseCase(logger, userRepository, clock);
+    useCase = new AddUserUseCase(logger, userRepository as unknown as UserRepositoryPort, clock);
   });
 
   class TestApplicationError extends ApplicationError {
@@ -71,7 +71,7 @@ describe('AddUserUseCase', () => {
     expect(clock.at).toHaveBeenCalledTimes(1);
     expect(userRepository.save).toHaveBeenCalledTimes(1);
 
-    expect(savedUser.toPrimitives()).toMatchObject({
+    expect(savedUser).toMatchObject({
       telegramId: 123456789n,
       firstName: 'Gordey',
       createdAt: now,

@@ -8,8 +8,6 @@ export const SearchAccountRequestSchema = z.object({
 
 export const SearchAccountResponseSchema = z.object({
   url: z.url(),
-  platform: z.string(),
-  handle: z.string(),
 });
 
 export type SearchAccountRequest = z.infer<typeof SearchAccountRequestSchema>;

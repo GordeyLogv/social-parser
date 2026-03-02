@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { Prisma } from '@prisma/client';
 
-import { LoggerPort, UserAlreadyExistsError, UserEntity, UserFailedToSave, UserRepositoryPort } from '@app/core';
+import { IUserPropsPrimitives, LoggerPort, UserAlreadyExistsError, UserFailedToSave, UserRepositoryPort } from '@app/core';
 
 import { PrismaAdapter } from '../../outbound/prisma/prisma.adapter';
 
@@ -13,18 +13,26 @@ export class UserRepositoryAdapter implements UserRepositoryPort {
     private readonly prisma: PrismaAdapter,
   ) {}
 
-  public async save(user: UserEntity): Promise<void> {
-    this.logger.info('Start');
+  public async findUser(telegramId: bigint): Promise<IUserPropsPrimitives | null> {
+    this.logger.info('Check user exists');
 
-    const toPrimitives = user.toPrimitives();
+    const userProps = await this.prisma.user.findUnique({
+      where: { telegramId },
+    });
+
+    return userProps ? userProps : null;
+  }
+
+  public async save(userProps: IUserPropsPrimitives): Promise<void> {
+    this.logger.info('Save user');
 
     try {
       await this.prisma.user.create({
         data: {
-          telegramId: toPrimitives.telegramId,
-          firstName: toPrimitives.firstName,
-          createdAt: toPrimitives.createdAt,
-          updatedAt: toPrimitives.updatedAt,
+          telegramId: userProps.telegramId,
+          firstName: userProps.firstName,
+          createdAt: userProps.createdAt,
+          updatedAt: userProps.updatedAt,
         },
       });
 
@@ -32,7 +40,7 @@ export class UserRepositoryAdapter implements UserRepositoryPort {
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code == 'P2002') {
         this.logger.warn(
-          `Ошибка при сохранении пользоватля. Пользователь с telegramId: ${toPrimitives.telegramId} - уже существует`,
+          `Ошибка при сохранении пользоватля. Пользователь с telegramId: ${userProps.telegramId} - уже существует`,
           { error: error },
         );
         throw new UserAlreadyExistsError();

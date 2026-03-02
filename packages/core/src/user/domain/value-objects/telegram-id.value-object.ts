@@ -24,6 +24,10 @@ export class TelegramIdVO {
     return new TelegramIdVO(parsed);
   }
 
+  public static persistence(value: bigint): TelegramIdVO {
+    return new TelegramIdVO(value);
+  }
+
   public get value(): bigint {
     return this._value;
   }

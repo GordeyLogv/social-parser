@@ -2,7 +2,7 @@ import { AccountHandleVO, AccountPlatformVO } from './value-objects';
 
 export interface IAccountProps {
   id?: number;
-  userId: number;
+  userId: bigint;
   platform: AccountPlatformVO;
   handle: AccountHandleVO;
   url: string;
@@ -13,7 +13,7 @@ export interface IAccountProps {
 }
 
 export interface IAccountPropsFactory {
-  userId: number;
+  userId: bigint;
   platform: string;
   handle: string;
   url: string;
@@ -24,7 +24,7 @@ export interface IAccountPropsFactory {
 
 export interface IAccountToPrimitives {
   id?: number;
-  userId: number;
+  userId: bigint;
   platform: string;
   handle: string;
   url: string;
