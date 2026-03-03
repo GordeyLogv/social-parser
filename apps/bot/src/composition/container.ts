@@ -6,7 +6,7 @@ import { ConfigPort, LoggerAppEnum, LoggerHandleEnum, LoggerPort } from '@app/co
 
 import { TOKENS } from '../tokens';
 
-import { ConfigAdapter, LoggerAdapter, UserApiAdapter, UserApiPort } from '../adapters/outbound';
+import { ConfigAdapter, LoggerAdapter, ServerApiAdapter, ServerApiPort } from '../adapters/outbound';
 import {
   StartCommand,
   ExceptionFilterAdapter,
@@ -14,6 +14,7 @@ import {
   ICallbackQuery,
   ICommand,
   MenuCallbackQuery,
+  AddAccountCallbackQuery,
 } from '../adapters/inbound';
 
 import { CallbackQueriesRegistryHelper, CommandsRegistryHelper } from '../common';
@@ -32,7 +33,7 @@ export const initContainer = (): Container => {
     .inSingletonScope();
   container.bind<ExceptionFilterAdapter>(TOKENS.ExceptionFilterPort).to(ExceptionFilterAdapter).inSingletonScope();
   container.bind<ConfigPort>(TOKENS.ConfigPort).to(ConfigAdapter).inSingletonScope();
-  container.bind<UserApiPort>(TOKENS.UserApiPort).to(UserApiAdapter).inSingletonScope();
+  container.bind<ServerApiPort>(TOKENS.ServerApiPort).to(ServerApiAdapter).inSingletonScope();
 
   // Logging
   container
@@ -49,8 +50,8 @@ export const initContainer = (): Container => {
     )
     .inSingletonScope();
   container
-    .bind<LoggerPort>(TOKENS.UserApiLogger)
-    .toDynamicValue((ctx) => ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandleName(UserApiAdapter.name))
+    .bind<LoggerPort>(TOKENS.ServerApiLogger)
+    .toDynamicValue((ctx) => ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandleName(ServerApiAdapter.name))
     .inSingletonScope();
 
   container
@@ -79,6 +80,14 @@ export const initContainer = (): Container => {
     )
     .inSingletonScope();
   container
+    .bind<LoggerPort>(TOKENS.AddAccountCallbackQueryLogger)
+    .toDynamicValue((ctx) =>
+      ctx
+        .get<LoggerPort>(TOKENS.LoggerPort)
+        .withHandle(LoggerHandleEnum.CALLBACK)
+        .withHandleName(AddAccountCallbackQuery.name),
+    );
+  container
     .bind<LoggerPort>(TOKENS.CallbackQueriesRegistryLogger)
     .toDynamicValue((ctx) =>
       ctx
@@ -102,6 +111,7 @@ export const initContainer = (): Container => {
   // CallbackQueries
   container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(MenuCallbackQuery).inSingletonScope();
   container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(HelpCallbackQuery).inSingletonScope();
+  container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(AddAccountCallbackQuery).inSingletonScope();
   container
     .bind<CallbackQueriesRegistryHelper>(TOKENS.CallbackQueriesRegistryHelper)
     .to(CallbackQueriesRegistryHelper)

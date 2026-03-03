@@ -5,7 +5,7 @@ import { Bot, Context } from 'grammy';
 import { LoggerPort } from '@app/core';
 
 import { TOKENS } from '../../../../tokens';
-import { UserApiPort } from '../../../outbound';
+import { ServerApiPort } from '../../../outbound';
 import { startMessage, ApiError } from '../../../../common';
 import { menuKeyboard } from '../../keyboards';
 import { ICommand } from '../command.interface';
@@ -14,7 +14,7 @@ import { ICommand } from '../command.interface';
 export class StartCommand implements ICommand {
   public constructor(
     @inject(TOKENS.StartCommandLogger) private logger: LoggerPort,
-    @inject(TOKENS.UserApiPort) private readonly api: UserApiPort,
+    @inject(TOKENS.ServerApiPort) private readonly api: ServerApiPort,
   ) {
     this.logger.info('Loading succes');
   }

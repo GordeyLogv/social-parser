@@ -3,19 +3,20 @@ export const TOKENS = {
   LoggerPort: Symbol.for('LoggerPort'),
   ConfigPort: Symbol.for('ConfigPort'),
   ExceptionFilterPort: Symbol.for('ExceptionFilterPort'),
-  UserApiPort: Symbol.for('UserApiPort'),
+  ServerApiPort: Symbol.for('UserApiPort'),
 
   // Logging
   TelegramBotLogger: Symbol.for('TelegramBotLogger'),
 
   ConfigLogger: Symbol.for('ConfigLogger'),
   ExceptionFilterLogger: Symbol.for('ExceptionFilterLogger'),
-  UserApiLogger: Symbol.for('UserApiLogger'),
+  ServerApiLogger: Symbol.for('UserApiLogger'),
 
   StartCommandLogger: Symbol.for('StartCommandLogger'),
 
   MenuCallbackQueryLogger: Symbol.for('MenuCallbackQueryLogger'),
   HelpCallbackQueryLogger: Symbol.for('HelpCallbackQueryLogger'),
+  AddAccountCallbackQueryLogger: Symbol.for('AddAccountCallbackQueryLogger'),
 
   CommandsRegistryLogger: Symbol.for('CommandsRegistryLogger'),
   CallbackQueriesRegistryLogger: Symbol.for('CallbackQueriesRegistryLogger'),
