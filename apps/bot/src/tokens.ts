@@ -12,14 +12,21 @@ export const TOKENS = {
   ExceptionFilterLogger: Symbol.for('ExceptionFilterLogger'),
   ServerApiLogger: Symbol.for('UserApiLogger'),
 
+  SessionMiddlewareLogger: Symbol.for('SessionMiddlewareLogger'),
+
   StartCommandLogger: Symbol.for('StartCommandLogger'),
 
   MenuCallbackQueryLogger: Symbol.for('MenuCallbackQueryLogger'),
   HelpCallbackQueryLogger: Symbol.for('HelpCallbackQueryLogger'),
   AddAccountCallbackQueryLogger: Symbol.for('AddAccountCallbackQueryLogger'),
 
+  MiddlewaresRegistryLogger: Symbol.for('MiddlewaresRegistryLogger'),
   CommandsRegistryLogger: Symbol.for('CommandsRegistryLogger'),
   CallbackQueriesRegistryLogger: Symbol.for('CallbackQueriesRegistryLogger'),
+
+  // Middlewares
+  IMiddleware: Symbol.for('IMiddleware'),
+  MiddlewaresRegistryHelper: Symbol.for('MiddlewaresRegistryHelper'),
 
   // Commands
   ICommand: Symbol.for('ICommand'),

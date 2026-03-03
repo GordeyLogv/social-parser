@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 
-import { Bot, Context } from 'grammy';
+import { Bot } from 'grammy';
 
 import { LoggerPort } from '@app/core';
 
@@ -8,12 +8,13 @@ import { ICallbackQuery } from '../callback-query.interface';
 import { TOKENS } from '../../../../tokens';
 import { helpMessage } from '../../../../common';
 import { backKeyboard } from '../../keyboards';
+import { MyContext } from '../../../../context';
 
 @injectable()
 export class HelpCallbackQuery implements ICallbackQuery {
   public constructor(@inject(TOKENS.HelpCallbackQueryLogger) private readonly logger: LoggerPort) {}
 
-  public register(bot: Bot<Context>): void {
+  public register(bot: Bot<MyContext>): void {
     bot.callbackQuery('ui:help', async (ctx) => {
       this.logger.info('Start', { user: { telegramId: ctx.msg?.chat.id } });
 

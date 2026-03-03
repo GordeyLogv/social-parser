@@ -1,19 +1,17 @@
 import { inject, injectable } from 'inversify';
 
-import { Context } from 'grammy';
-
 import { LoggerPort } from '@app/core';
 
 import { TOKENS } from '../../../tokens';
 import { normalizedErrorHelper, ExceptionFilterPort } from '../../../common';
-
 import { ErrorCodeToMessageMapper } from './error-code-to-message.mapper';
+import { MyContext } from '../../../context';
 
 @injectable()
 export class ExceptionFilterAdapter implements ExceptionFilterPort {
   public constructor(@inject(TOKENS.ExceptionFilterLogger) private readonly logger: LoggerPort) {}
 
-  public async handle(error: unknown, ctx: Context): Promise<void> {
+  public async handle(error: unknown, ctx: MyContext): Promise<void> {
     const normalizedError = normalizedErrorHelper(error);
 
     const errorMessageMapped = ErrorCodeToMessageMapper[normalizedError.code] ?? 'Что то пошло не так, попробуйсте позже';

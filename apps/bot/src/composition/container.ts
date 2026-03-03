@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 
-import { Bot, Context } from 'grammy';
+import { Bot } from 'grammy';
 
 import { ConfigPort, LoggerAppEnum, LoggerHandleEnum, LoggerPort } from '@app/core';
 
@@ -15,11 +15,17 @@ import {
   ICommand,
   MenuCallbackQuery,
   AddAccountCallbackQuery,
+  SessionMiddleware,
+  IMiddleware,
 } from '../adapters/inbound';
 
 import { CallbackQueriesRegistryHelper, CommandsRegistryHelper } from '../common';
 
 import { TelegramBot } from '../app/telegram-bot';
+
+import { MyContext } from '../context';
+
+import { MiddlewaresRegistryHelper } from '../common/helpers/middleware/middlewares-registry.helper';
 
 export const initContainer = (): Container => {
   const container = new Container();
@@ -53,6 +59,20 @@ export const initContainer = (): Container => {
     .bind<LoggerPort>(TOKENS.ServerApiLogger)
     .toDynamicValue((ctx) => ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandleName(ServerApiAdapter.name))
     .inSingletonScope();
+
+  container
+    .bind<LoggerPort>(TOKENS.SessionMiddlewareLogger)
+    .toDynamicValue((ctx) =>
+      ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandle(LoggerHandleEnum.MIDDLEWARE).withHandleName(SessionMiddleware.name),
+    );
+  container
+    .bind<LoggerPort>(TOKENS.MiddlewaresRegistryLogger)
+    .toDynamicValue((ctx) =>
+      ctx
+        .get<LoggerPort>(TOKENS.LoggerPort)
+        .withHandle(LoggerHandleEnum.HELPER)
+        .withHandleName(MiddlewaresRegistryHelper.name),
+    );
 
   container
     .bind<LoggerPort>(TOKENS.StartCommandLogger)
@@ -104,6 +124,13 @@ export const initContainer = (): Container => {
     )
     .inSingletonScope();
 
+  // Middlewares
+  container.bind<IMiddleware>(TOKENS.IMiddleware).to(SessionMiddleware).inSingletonScope();
+  container
+    .bind<MiddlewaresRegistryHelper>(TOKENS.MiddlewaresRegistryHelper)
+    .to(MiddlewaresRegistryHelper)
+    .inSingletonScope();
+
   // Commands
   container.bind<ICommand>(TOKENS.ICommand).to(StartCommand).inSingletonScope();
   container.bind<CommandsRegistryHelper>(TOKENS.CommandsRegistryHelper).to(CommandsRegistryHelper).inSingletonScope();
@@ -118,7 +145,7 @@ export const initContainer = (): Container => {
     .inSingletonScope();
 
   container
-    .bind<Bot<Context>>(TOKENS.Grammy)
+    .bind<Bot<MyContext>>(TOKENS.Grammy)
     .toDynamicValue((ctx) => {
       const config = ctx.get<ConfigPort>(TOKENS.ConfigPort);
       const token = config.get('BOT_TOKEN');

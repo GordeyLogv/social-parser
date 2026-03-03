@@ -11,4 +11,5 @@ export enum LoggerHandleEnum {
   LISTENER = 'Listener',
   EXCEPTION_FILTER = 'Exception filter',
   HELPER = 'Helper',
+  MIDDLEWARE = 'Middleware',
 }

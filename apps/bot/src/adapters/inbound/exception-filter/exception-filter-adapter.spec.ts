@@ -2,12 +2,13 @@ import { LoggerPort } from '@app/core';
 
 import { ExceptionFilterAdapter } from './exception-filter.adapter';
 import { ApiError } from '../../../common';
-import { Context, GrammyError, HttpError } from 'grammy';
+import { GrammyError, HttpError } from 'grammy';
 import { ErrorCodeToMessageMapper } from './error-code-to-message.mapper';
+import { MyContext } from '../../../context';
 
 describe('ExceptionFilterAdapter', () => {
   let logger: jest.Mocked<LoggerPort>;
-  let ctx: Context;
+  let ctx: MyContext;
   let replyMock: jest.Mock;
   let adapter: ExceptionFilterAdapter;
 
@@ -31,7 +32,7 @@ describe('ExceptionFilterAdapter', () => {
 
     ctx = {
       reply: replyMock,
-    } as unknown as Context;
+    } as unknown as MyContext;
 
     adapter = new ExceptionFilterAdapter(logger);
   });

@@ -1,5 +1,5 @@
-import { Context } from 'grammy';
+import { MyContext } from '../../context';
 
 export interface ExceptionFilterPort {
-  handle: (error: unknown, ctx: Context) => Promise<void>;
+  handle: (error: unknown, ctx: MyContext) => Promise<void>;
 }

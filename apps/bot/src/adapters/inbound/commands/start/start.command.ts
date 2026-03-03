@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 
-import { Bot, Context } from 'grammy';
+import { Bot } from 'grammy';
 
 import { LoggerPort } from '@app/core';
 
@@ -9,6 +9,7 @@ import { ServerApiPort } from '../../../outbound';
 import { startMessage, ApiError } from '../../../../common';
 import { menuKeyboard } from '../../keyboards';
 import { ICommand } from '../command.interface';
+import { MyContext } from '../../../../context';
 
 @injectable()
 export class StartCommand implements ICommand {
@@ -19,7 +20,7 @@ export class StartCommand implements ICommand {
     this.logger.info('Loading succes');
   }
 
-  public register(bot: Bot<Context>): void {
+  public register(bot: Bot<MyContext>): void {
     bot.command('start', async (ctx) => {
       const res = {
         telegramId: String(ctx.msg.chat.id),

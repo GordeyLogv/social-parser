@@ -1,8 +1,12 @@
 import { inject, injectable, multiInject } from 'inversify';
-import { TOKENS } from '../../../tokens';
+
+import { Bot } from 'grammy';
+
 import { LoggerPort } from '@app/core';
+
+import { TOKENS } from '../../../tokens';
 import { ICommand } from '../../../adapters';
-import { Bot, Context } from 'grammy';
+import { MyContext } from '../../../context';
 
 @injectable()
 export class CommandsRegistryHelper {
@@ -11,7 +15,7 @@ export class CommandsRegistryHelper {
     @multiInject(TOKENS.ICommand) private readonly commands: ICommand[],
   ) {}
 
-  public registryAllCommands(bot: Bot<Context>): void {
+  public registryAllCommands(bot: Bot<MyContext>): void {
     for (const command of this.commands) {
       this.logger.info(`${command.constructor.name} - loading success`);
 

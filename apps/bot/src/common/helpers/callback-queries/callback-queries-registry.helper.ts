@@ -1,11 +1,12 @@
 import { inject, injectable, multiInject } from 'inversify';
 
-import { Bot, Context } from 'grammy';
+import { Bot } from 'grammy';
 
 import { LoggerPort } from '@app/core';
 
 import { TOKENS } from '../../../tokens';
 import { ICallbackQuery } from '../../../adapters';
+import { MyContext } from '../../../context';
 
 @injectable()
 export class CallbackQueriesRegistryHelper {
@@ -14,7 +15,7 @@ export class CallbackQueriesRegistryHelper {
     @multiInject(TOKENS.ICallbackQuery) private readonly callbackQueries: ICallbackQuery[],
   ) {}
 
-  public registryAllCallbackQueries(bot: Bot<Context>): void {
+  public registryAllCallbackQueries(bot: Bot<MyContext>): void {
     for (const callbackQuery of this.callbackQueries) {
       this.logger.info(`${callbackQuery.constructor.name} - loading success`);
 
