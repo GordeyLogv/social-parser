@@ -20,8 +20,11 @@ export class AddAccountCallbackQuery implements ICallbackQuery {
 
       await ctx.answerCallbackQuery();
 
+      console.log(AddAccountCallbackQuery.name, ctx.session);
+
       if (ctx.session.step != ContextSteepEnum.IDLE) {
         setSessionHelper(ctx, ContextSteepEnum.IDLE);
+        console.log(AddAccountCallbackQuery.name, ctx.session);
       }
 
       await ctx.editMessageText(addAccountMessage, { reply_markup: addAccountKeyboard() });

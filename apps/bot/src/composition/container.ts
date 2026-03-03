@@ -17,10 +17,18 @@ import {
   AddAccountCallbackQuery,
   SessionMiddleware,
   IMiddleware,
-  ChoosedPlatfromCallbackQuery,
+  ChoosedPlatformCallbackQuery,
+  IListerMessage,
+  FallbackListenerMessage,
+  SearchedAccountListenerMessage,
 } from '../adapters/inbound';
 
-import { CallbackQueriesRegistryHelper, CommandsRegistryHelper, MiddlewaresRegistryHelper } from '../common';
+import {
+  CallbackQueriesRegistryHelper,
+  CommandsRegistryHelper,
+  ListenerMessageRegistryHelper,
+  MiddlewaresRegistryHelper,
+} from '../common';
 
 import { TelegramBot } from '../app/telegram-bot';
 
@@ -63,7 +71,8 @@ export const initContainer = (): Container => {
     .bind<LoggerPort>(TOKENS.SessionMiddlewareLogger)
     .toDynamicValue((ctx) =>
       ctx.get<LoggerPort>(TOKENS.LoggerPort).withHandle(LoggerHandleEnum.MIDDLEWARE).withHandleName(SessionMiddleware.name),
-    );
+    )
+    .inSingletonScope();
   container
     .bind<LoggerPort>(TOKENS.MiddlewaresRegistryLogger)
     .toDynamicValue((ctx) =>
@@ -71,7 +80,8 @@ export const initContainer = (): Container => {
         .get<LoggerPort>(TOKENS.LoggerPort)
         .withHandle(LoggerHandleEnum.HELPER)
         .withHandleName(MiddlewaresRegistryHelper.name),
-    );
+    )
+    .inSingletonScope();
 
   container
     .bind<LoggerPort>(TOKENS.StartCommandLogger)
@@ -105,15 +115,17 @@ export const initContainer = (): Container => {
         .get<LoggerPort>(TOKENS.LoggerPort)
         .withHandle(LoggerHandleEnum.CALLBACK)
         .withHandleName(AddAccountCallbackQuery.name),
-    );
+    )
+    .inSingletonScope();
   container
     .bind<LoggerPort>(TOKENS.ChoosedPlatformCallbackQueryLogger)
     .toDynamicValue((ctx) =>
       ctx
         .get<LoggerPort>(TOKENS.LoggerPort)
         .withHandle(LoggerHandleEnum.CALLBACK)
-        .withHandleName(ChoosedPlatfromCallbackQuery.name),
-    );
+        .withHandleName(ChoosedPlatformCallbackQuery.name),
+    )
+    .inSingletonScope();
   container
     .bind<LoggerPort>(TOKENS.CallbackQueriesRegistryLogger)
     .toDynamicValue((ctx) =>
@@ -121,6 +133,34 @@ export const initContainer = (): Container => {
         .get<LoggerPort>(TOKENS.LoggerPort)
         .withHandle(LoggerHandleEnum.HELPER)
         .withHandleName(CallbackQueriesRegistryHelper.name),
+    )
+    .inSingletonScope();
+
+  container
+    .bind<LoggerPort>(TOKENS.FallbackListenerMessageLogger)
+    .toDynamicValue((ctx) =>
+      ctx
+        .get<LoggerPort>(TOKENS.LoggerPort)
+        .withHandle(LoggerHandleEnum.LISTENER)
+        .withHandleName(FallbackListenerMessage.name),
+    )
+    .inSingletonScope();
+  container
+    .bind<LoggerPort>(TOKENS.SearchedAccountListenerMessageLogger)
+    .toDynamicValue((ctx) =>
+      ctx
+        .get<LoggerPort>(TOKENS.LoggerPort)
+        .withHandle(LoggerHandleEnum.LISTENER)
+        .withHandleName(SearchedAccountListenerMessage.name),
+    )
+    .inSingletonScope();
+  container
+    .bind<LoggerPort>(TOKENS.ListenersMessageRigistrtLogger)
+    .toDynamicValue((ctx) =>
+      ctx
+        .get<LoggerPort>(TOKENS.LoggerPort)
+        .withHandle(LoggerHandleEnum.HELPER)
+        .withHandleName(ListenerMessageRegistryHelper.name),
     )
     .inSingletonScope();
 
@@ -146,10 +186,18 @@ export const initContainer = (): Container => {
   container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(MenuCallbackQuery).inSingletonScope();
   container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(HelpCallbackQuery).inSingletonScope();
   container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(AddAccountCallbackQuery).inSingletonScope();
-  container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(ChoosedPlatfromCallbackQuery).inSingletonScope();
+  container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(ChoosedPlatformCallbackQuery).inSingletonScope();
   container
     .bind<CallbackQueriesRegistryHelper>(TOKENS.CallbackQueriesRegistryHelper)
     .to(CallbackQueriesRegistryHelper)
+    .inSingletonScope();
+
+  // ListenersMessage
+  container.bind<IListerMessage>(TOKENS.IListenerMessage).to(FallbackListenerMessage).inSingletonScope();
+  container.bind<IListerMessage>(TOKENS.IListenerMessage).to(SearchedAccountListenerMessage).inSingletonScope();
+  container
+    .bind<ListenerMessageRegistryHelper>(TOKENS.ListenersMessageRegistryHelper)
+    .to(ListenerMessageRegistryHelper)
     .inSingletonScope();
 
   container

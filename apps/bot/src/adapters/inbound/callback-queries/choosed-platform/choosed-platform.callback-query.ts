@@ -11,12 +11,12 @@ import { choosedPlatformMessage, ContextSteepEnum, mapperPlatform, setSessionHel
 import { backKeyboard } from '../../keyboards';
 
 @injectable()
-export class ChoosedPlatfromCallbackQuery implements ICallbackQuery {
+export class ChoosedPlatformCallbackQuery implements ICallbackQuery {
   public constructor(@inject(TOKENS.ChoosedPlatformCallbackQueryLogger) private readonly logger: LoggerPort) {}
 
   public register(bot: Bot<MyContext>): void {
     bot.callbackQuery(/^ui:add_account:(tiktok|instagram|youtube)$/, async (ctx) => {
-      const provider = ctx.update.callback_query.data.split(':')[2];
+      const provider = ctx.match?.[1];
 
       const platform = mapperPlatform(provider);
 

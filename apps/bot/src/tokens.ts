@@ -21,9 +21,13 @@ export const TOKENS = {
   AddAccountCallbackQueryLogger: Symbol.for('AddAccountCallbackQueryLogger'),
   ChoosedPlatformCallbackQueryLogger: Symbol.for('ChoosedPlatformCallbackQueryLogger'),
 
+  FallbackListenerMessageLogger: Symbol.for('FallbackListenerMessageLogger'),
+  SearchedAccountListenerMessageLogger: Symbol.for('SearchedAccountListenerMessageLogger'),
+
   MiddlewaresRegistryLogger: Symbol.for('MiddlewaresRegistryLogger'),
   CommandsRegistryLogger: Symbol.for('CommandsRegistryLogger'),
   CallbackQueriesRegistryLogger: Symbol.for('CallbackQueriesRegistryLogger'),
+  ListenersMessageRigistrtLogger: Symbol.for('ListenersMessageRigistrtLogger'),
 
   // Middlewares
   IMiddleware: Symbol.for('IMiddleware'),
@@ -36,6 +40,10 @@ export const TOKENS = {
   // CallbackQueries
   ICallbackQuery: Symbol.for('ICallbackQuery'),
   CallbackQueriesRegistryHelper: Symbol.for('CallbackQueriesRegistryHelper'),
+
+  // ListenersMessage
+  IListenerMessage: Symbol.for('IListenerMessage'),
+  ListenersMessageRegistryHelper: Symbol.for('ListenersMessageRegistryHelper'),
 
   Grammy: Symbol.for('Grammy'),
 

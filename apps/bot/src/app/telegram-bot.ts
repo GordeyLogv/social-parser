@@ -5,7 +5,12 @@ import { Bot } from 'grammy';
 import { LoggerPort } from '@app/core';
 
 import { TOKENS } from '../tokens';
-import { CallbackQueriesRegistryHelper, CommandsRegistryHelper, MiddlewaresRegistryHelper } from '../common';
+import {
+  CallbackQueriesRegistryHelper,
+  CommandsRegistryHelper,
+  ListenerMessageRegistryHelper,
+  MiddlewaresRegistryHelper,
+} from '../common';
 import { ExceptionFilterAdapter } from '../adapters';
 import { MyContext } from '../context';
 
@@ -20,34 +25,37 @@ export class TelegramBot {
     @inject(TOKENS.CommandsRegistryHelper) private readonly commands: CommandsRegistryHelper,
     @inject(TOKENS.CallbackQueriesRegistryHelper) private readonly callbackQueries: CallbackQueriesRegistryHelper,
     @inject(TOKENS.MiddlewaresRegistryHelper) private readonly middlewares: MiddlewaresRegistryHelper,
+    @inject(TOKENS.ListenersMessageRegistryHelper) private readonly listeners: ListenerMessageRegistryHelper,
   ) {
     this.logger.info('Bot init');
   }
 
-  private useMiddlewares() {
+  private registerMiddlewares() {
     this.middlewares.registryAllMiddlewares(this.bot);
   }
 
-  private useListenersMessage() {}
+  private registerListenersMessage() {
+    this.listeners.registryAllListenersMessages(this.bot);
+  }
 
-  private useCommands() {
+  private registerCommands() {
     this.commands.registryAllCommands(this.bot);
   }
 
-  private useCallbackQueries() {
+  private registerCallbackQueries() {
     this.callbackQueries.registryAllCallbackQueries(this.bot);
   }
 
-  private useExceptionFilter() {
+  private registerExceptionFilter() {
     this.bot.catch(async ({ error, ctx }) => this.exceptionFilter.handle(error, ctx));
   }
 
   public async init() {
-    this.useMiddlewares();
-    this.useListenersMessage();
-    this.useCommands();
-    this.useCallbackQueries();
-    this.useExceptionFilter();
+    this.registerExceptionFilter();
+    this.registerMiddlewares();
+    this.registerCommands();
+    this.registerCallbackQueries();
+    this.registerListenersMessage();
 
     await this.bot.start();
   }
