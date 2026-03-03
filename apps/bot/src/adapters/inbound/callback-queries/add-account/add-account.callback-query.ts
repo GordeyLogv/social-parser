@@ -6,7 +6,7 @@ import { LoggerPort } from '@app/core';
 
 import { ICallbackQuery } from '../callback-query.interface';
 import { TOKENS } from '../../../../tokens';
-import { addAccountMessage } from '../../../../common';
+import { addAccountMessage, ContextSteepEnum, setSessionHelper } from '../../../../common';
 import { addAccountKeyboard } from '../../keyboards';
 import { MyContext } from '../../../../context';
 
@@ -19,6 +19,10 @@ export class AddAccountCallbackQuery implements ICallbackQuery {
       this.logger.info('Start', { telegramId: ctx.msg?.chat.id });
 
       await ctx.answerCallbackQuery();
+
+      if (ctx.session.step != ContextSteepEnum.IDLE) {
+        setSessionHelper(ctx, ContextSteepEnum.IDLE);
+      }
 
       await ctx.editMessageText(addAccountMessage, { reply_markup: addAccountKeyboard() });
     });

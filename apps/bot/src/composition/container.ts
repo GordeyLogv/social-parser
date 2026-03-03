@@ -17,15 +17,14 @@ import {
   AddAccountCallbackQuery,
   SessionMiddleware,
   IMiddleware,
+  ChoosedPlatfromCallbackQuery,
 } from '../adapters/inbound';
 
-import { CallbackQueriesRegistryHelper, CommandsRegistryHelper } from '../common';
+import { CallbackQueriesRegistryHelper, CommandsRegistryHelper, MiddlewaresRegistryHelper } from '../common';
 
 import { TelegramBot } from '../app/telegram-bot';
 
 import { MyContext } from '../context';
-
-import { MiddlewaresRegistryHelper } from '../common/helpers/middleware/middlewares-registry.helper';
 
 export const initContainer = (): Container => {
   const container = new Container();
@@ -108,6 +107,14 @@ export const initContainer = (): Container => {
         .withHandleName(AddAccountCallbackQuery.name),
     );
   container
+    .bind<LoggerPort>(TOKENS.ChoosedPlatformCallbackQueryLogger)
+    .toDynamicValue((ctx) =>
+      ctx
+        .get<LoggerPort>(TOKENS.LoggerPort)
+        .withHandle(LoggerHandleEnum.CALLBACK)
+        .withHandleName(ChoosedPlatfromCallbackQuery.name),
+    );
+  container
     .bind<LoggerPort>(TOKENS.CallbackQueriesRegistryLogger)
     .toDynamicValue((ctx) =>
       ctx
@@ -139,6 +146,7 @@ export const initContainer = (): Container => {
   container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(MenuCallbackQuery).inSingletonScope();
   container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(HelpCallbackQuery).inSingletonScope();
   container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(AddAccountCallbackQuery).inSingletonScope();
+  container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(ChoosedPlatfromCallbackQuery).inSingletonScope();
   container
     .bind<CallbackQueriesRegistryHelper>(TOKENS.CallbackQueriesRegistryHelper)
     .to(CallbackQueriesRegistryHelper)
