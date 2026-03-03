@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 
-import { UserController } from './user.controller';
-import { UserRepositoryModule } from '../../outbound';
-import { TOKENS } from '../../../tokens';
-import { UserService } from './user.service';
 import { AddUserUseCase, ClockPort, LoggerAppEnum, LoggerHandleEnum, LoggerPort, UserRepositoryPort } from '@app/core';
+
+import { UserRepositoryModule } from '../../outbound';
+
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
+import { TOKENS } from '../../../tokens';
 
 @Module({
   imports: [UserRepositoryModule],

@@ -11,11 +11,14 @@ import {
   UserRepositoryPort,
 } from '@app/core';
 
+import { AccountRepositoryModule, ParserApiModule, UserRepositoryModule } from '../../outbound';
+
 import { AccountController } from './account.controller';
 import { AccountService } from './account.service';
 import { TOKENS } from '../../../tokens';
 
 @Module({
+  imports: [AccountRepositoryModule, UserRepositoryModule, ParserApiModule],
   controllers: [AccountController],
   providers: [
     AccountService,

@@ -1,7 +1,17 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { AccountModule, PrismaModule, UserModule, LoggerModule, ClockModule, ExceptionFilterApiModule } from '../adapters';
+import {
+  AccountModule,
+  PrismaModule,
+  UserModule,
+  LoggerModule,
+  ClockModule,
+  ExceptionFilterApiModule,
+  ParserApiModule,
+  UserRepositoryModule,
+  AccountRepositoryModule,
+} from '../adapters';
 
 import { configRoot } from '../common/configs';
 
@@ -12,6 +22,10 @@ import { configRoot } from '../common/configs';
     ExceptionFilterApiModule,
     LoggerModule,
     ClockModule,
+    ParserApiModule,
+
+    UserRepositoryModule,
+    AccountRepositoryModule,
 
     UserModule,
     AccountModule,

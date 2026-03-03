@@ -7,7 +7,6 @@ import { AccountRepositoryAdapter } from './account-repository.adapter';
 import { PrismaAdapter } from '../prisma/prisma.adapter';
 
 @Module({
-  exports: [AccountRepositoryAdapter],
   providers: [
     {
       provide: TOKENS.AccountRepositoryLogging,
@@ -21,5 +20,6 @@ import { PrismaAdapter } from '../prisma/prisma.adapter';
       inject: [TOKENS.AccountRepositoryLogging, PrismaAdapter],
     },
   ],
+  exports: [TOKENS.AccountRepositoryPort],
 })
-export class AccountnRepositoryModule {}
+export class AccountRepositoryModule {}

@@ -18,6 +18,6 @@ import { TOKENS } from '../../../tokens';
       inject: [TOKENS.ParserApiLogging],
     },
   ],
-  exports: [ParserApiAdapter],
+  exports: [TOKENS.ParserApiPort],
 })
 export class ParserApiModule {}

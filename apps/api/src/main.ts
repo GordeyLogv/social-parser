@@ -20,6 +20,6 @@ async function bootstrap() {
 
   app.useGlobalFilters(new ExceptionFilterApi(app.get<LoggerPort>(TOKENS.ExceptionFilterApiLogging)));
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 5000);
 }
 bootstrap().catch((e) => console.log(e));
