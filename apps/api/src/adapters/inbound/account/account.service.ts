@@ -37,5 +37,11 @@ export class AccountService {
       handle: input.handle,
       url: input.url,
     });
+
+    this.logger.info('Пользователь подтвервил аккаунт', {
+      userId: userProps.id,
+      telegramId: userProps.telegramId,
+      url: input.url,
+    });
   }
 }

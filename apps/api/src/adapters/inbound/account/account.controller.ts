@@ -22,5 +22,9 @@ export class AccountController {
   }
 
   @Post()
-  public async addAccount(@Body() dto: ConfirmAccountDto): Promise<ConfirmAccountResponse> {}
+  public async addAccount(@Body() dto: ConfirmAccountDto): Promise<ConfirmAccountResponse> {
+    this.logger.info('Start', { dto });
+
+    return this.service.confirmAccount(dto);
+  }
 }
