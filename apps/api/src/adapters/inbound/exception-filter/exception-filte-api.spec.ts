@@ -1,6 +1,5 @@
 import { LoggerPort, TelegramIdInvalidError, UserPersistenceFailedError } from '@app/core';
 import { ExceptionFilterApi } from './exception-filter-api';
-import { ZodValidationException } from 'nestjs-zod';
 import { ArgumentsHost, HttpException } from '@nestjs/common';
 
 describe('ExceptionFilterApi', () => {

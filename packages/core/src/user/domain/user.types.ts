@@ -16,7 +16,7 @@ export interface IUserPropsFactory {
 }
 
 export interface IUserPropsPrimitives {
-  id?: number;
+  id: number;
   telegramId: bigint;
   firstName: string;
   createdAt: Date;

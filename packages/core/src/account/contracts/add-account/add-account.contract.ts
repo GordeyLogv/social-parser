@@ -1,5 +1,5 @@
 export interface AddAccountInput {
-  userId: bigint;
+  userId: number;
   platform: string;
   handle: string;
   url: string;

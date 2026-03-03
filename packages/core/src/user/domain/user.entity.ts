@@ -48,7 +48,7 @@ export class UserEntity {
 
   public toPrimitives(): IUserPropsPrimitives {
     return {
-      id: this._id,
+      id: this._id ?? 0,
       telegramId: this._telegramId.value,
       firstName: this._firstName.value,
       createdAt: this.createdAt,

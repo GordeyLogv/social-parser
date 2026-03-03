@@ -48,17 +48,19 @@ describe('UserRepositoryAdapter', () => {
       updatedAt: now,
     });
 
+    const TestUserProps = testUser.toPrimitives();
+
     it('Should save user where user entity not throw error and prisma not throw error', async () => {
       prisma.user.create.mockResolvedValue(undefined);
 
-      expect(await userRepository.save(testUser)).toEqual(undefined);
+      expect(await userRepository.save(TestUserProps)).toEqual(undefined);
 
       expect(prisma.user.create).toHaveBeenCalledWith({
         data: {
-          telegramId: testUser.toPrimitives().telegramId,
-          firstName: testUser.toPrimitives().firstName,
-          createdAt: testUser.toPrimitives().createdAt,
-          updatedAt: testUser.toPrimitives().updatedAt,
+          telegramId: TestUserProps.telegramId,
+          firstName: TestUserProps.firstName,
+          createdAt: TestUserProps.createdAt,
+          updatedAt: TestUserProps.updatedAt,
         },
       });
 
@@ -70,7 +72,7 @@ describe('UserRepositoryAdapter', () => {
         new PrismaClientKnownRequestError('Test error', { code: 'P2002', clientVersion: 'TEST' }),
       );
 
-      await expect(userRepository.save(testUser)).rejects.toBeInstanceOf(ApplicationError);
+      await expect(userRepository.save(TestUserProps)).rejects.toBeInstanceOf(ApplicationError);
 
       expect(logger.warn).toHaveBeenCalled();
       expect(logger.error).not.toHaveBeenCalled();
@@ -81,7 +83,7 @@ describe('UserRepositoryAdapter', () => {
         new PrismaClientKnownRequestError('Test error', { code: 'TEST', clientVersion: 'TEST' }),
       );
 
-      await expect(userRepository.save(testUser)).rejects.toBeInstanceOf(ApplicationError);
+      await expect(userRepository.save(TestUserProps)).rejects.toBeInstanceOf(ApplicationError);
 
       expect(logger.error).toHaveBeenCalled();
       expect(logger.warn).not.toHaveBeenCalled();
