@@ -1,4 +1,4 @@
 export enum GetUserErrorMessages {
-  USER_NOT_FOUND = 'Ошибка при поиске пользователя. Пользователь не найден',
-  USER_PERSISTENCE_FAILED = 'Ошибка при создании пользователя с бд',
+  USER_NOT_FOUND = 'Error searching for user. User not found',
+  USER_PERSISTENCE_FAILED = 'Error creating user from database',
 }

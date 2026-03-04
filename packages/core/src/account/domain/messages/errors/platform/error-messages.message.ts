@@ -1,4 +1,4 @@
 export enum AccountPlatformErrorMessages {
-  INVALID_PLATFORM = 'Платформа невалидна',
-  NOT_SUPPORTED_PLATFORM = 'Платформа не поддерживается',
+  INVALID_PLATFORM = 'The platform is invalid',
+  NOT_SUPPORTED_PLATFORM = 'The platform is not supported',
 }

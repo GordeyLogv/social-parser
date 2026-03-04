@@ -1,5 +1,5 @@
 export enum AccountHandleErrorMessages {
-  INVALID_HANDLE = 'Handle не валидный',
-  HANDLE_TO_SHORT = 'Введённый handle меньше 3 символов',
-  HANDLE_TO_LONG = 'Введённый handle больше 65 символов',
+  INVALID_HANDLE = 'The handle is not valid',
+  HANDLE_TO_SHORT = 'The entered handle is less than 3 characters long.',
+  HANDLE_TO_LONG = 'The entered handle is longer than 65 characters.',
 }

@@ -1,4 +1,4 @@
 export enum AddUserErrorMessages {
-  USER_ALREADY_EXISTS = 'Пользователь пытается создать уже существующего пользователя',
-  USER_FAILED_TO_SAVE = 'Ошибка при сохранении пользователя',
+  USER_ALREADY_EXISTS = 'The user is attempting to create an existing user',
+  USER_FAILED_TO_SAVE = 'Error saving user',
 }
