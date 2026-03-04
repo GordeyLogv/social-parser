@@ -15,19 +15,25 @@ export class AccountService {
   ) {}
 
   public async searchAccount(input: { telegramId: string; handle: string; platform: string }): Promise<{ url: string }> {
-    this.logger.info('Пользователь ищет аккаунт', { telegramId: input.telegramId });
+    this.logger.info(`User: ${input.telegramId} finding account`, { handle: input.handle, platform: input.platform });
 
     const url = await this.api.searchAccount(input.handle, input.platform);
 
-    this.logger.info('Найденный аккаунт', { account: url });
+    this.logger.info('Finded account', { account: url });
 
     return { url };
   }
 
   public async confirmAccount(input: { telegramId: string; handle: string; platform: string; url: string }): Promise<void> {
-    this.logger.info('Пользователь подтверждает аккаунт', { telegramId: input.telegramId, account: input.url });
+    this.logger.info(`User: ${input.telegramId} confirned account`, {
+      handle: input.handle,
+      platform: input.platform,
+      url: input.url,
+    });
 
     const checkExistsUser = await this.useCaseUser.execute({ telegramId: input.telegramId });
+
+    this.logger.info(`User: ${input.telegramId} - exists`);
 
     const userProps = checkExistsUser.user.toPrimitives();
 
@@ -38,7 +44,7 @@ export class AccountService {
       url: input.url,
     });
 
-    this.logger.info('Пользователь подтвервил аккаунт', {
+    this.logger.info('User saved account', {
       userId: userProps.id,
       telegramId: userProps.telegramId,
       url: input.url,

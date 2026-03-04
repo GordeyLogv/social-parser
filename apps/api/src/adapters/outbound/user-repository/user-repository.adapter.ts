@@ -14,17 +14,23 @@ export class UserRepositoryAdapter implements UserRepositoryPort {
   ) {}
 
   public async findUser(telegramId: bigint): Promise<IUserPropsPrimitives | null> {
-    this.logger.info('Check user exists');
+    this.logger.info('Start finding user by telegram id', { telegramId });
 
     const userProps = await this.prisma.user.findUnique({
       where: { telegramId },
     });
 
-    return userProps ? userProps : null;
+    if (!userProps) {
+      this.logger.info('User not exists', { telegramId });
+      return null;
+    }
+
+    this.logger.info('User is exists', { props: userProps });
+    return userProps;
   }
 
   public async save(userProps: IUserPropsPrimitives): Promise<void> {
-    this.logger.info('Save user');
+    this.logger.info('Start save user', { props: userProps });
 
     try {
       await this.prisma.user.create({
@@ -36,16 +42,15 @@ export class UserRepositoryAdapter implements UserRepositoryPort {
         },
       });
 
-      this.logger.info(`Пользователь создан`);
+      this.logger.info(`Complete save user`, { props: userProps });
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code == 'P2002') {
-        this.logger.warn(
-          `Ошибка при сохранении пользоватля. Пользователь с telegramId: ${userProps.telegramId} - уже существует`,
-          { error: error },
-        );
+        this.logger.warn(`Error to save user. User is exists by telegramId: ${userProps.telegramId}`, {
+          error: error,
+        });
         throw new UserAlreadyExistsError();
       }
-      this.logger.error('Ошибка при сохранении пользователя', { error: error });
+      this.logger.error('Unknown error to save user', { error: error });
       throw new UserFailedToSave();
     }
   }

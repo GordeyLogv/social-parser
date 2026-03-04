@@ -12,7 +12,8 @@ export class UserService {
   ) {}
 
   public async addUser(telegramId: string, firstName?: string): Promise<void> {
-    this.logger.info('start');
+    this.logger.info(`Saved user: ${telegramId}`);
     await this.useCase.execute({ telegramId, firstName });
+    this.logger.info('Success saved user', { telegramId, firstName });
   }
 }

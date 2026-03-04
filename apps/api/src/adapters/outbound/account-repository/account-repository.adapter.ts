@@ -20,32 +20,30 @@ export class AccountRepositoryAdapter implements AccountRepositoryPort {
     private readonly prisma: PrismaAdapter,
   ) {}
 
-  public async save(account: AccountEntity): Promise<void> {
-    this.logger.info('Start');
-
-    const toPrimitives: IAccountToPrimitives = account.toPrimitives();
+  public async save(account: IAccountToPrimitives): Promise<void> {
+    this.logger.info('Start to save account props', { account });
 
     try {
       await this.prisma.account.create({
         data: {
-          userId: toPrimitives.userId,
-          platform: toPrimitives.platform,
-          handle: toPrimitives.handle,
-          url: toPrimitives.url,
-          syncedStatus: toPrimitives.syncedStatus,
-          createdAt: toPrimitives.createdAt,
-          updatedAt: toPrimitives.updatedAt,
+          userId: account.userId,
+          platform: account.platform,
+          handle: account.handle,
+          url: account.url,
+          syncedStatus: account.syncedStatus,
+          createdAt: account.createdAt,
+          updatedAt: account.updatedAt,
         },
       });
-      this.logger.info('Аккаунт создан', { account });
+      this.logger.info('Complete to save account', { account });
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code == 'P2002') {
-        this.logger.warn(`Ошибка при сохранении аккаунта. Аккаунт с url: ${toPrimitives.url} - уже существует`, {
+        this.logger.warn(`Error to save account. Account: ${account.url} - is exists`, {
           error: error,
         });
         throw new AccountDuplicateUrlError();
       } else {
-        this.logger.error('Ошибка при сохранениии аккаунта', { error: error });
+        this.logger.error('Unknown error to save account', { error: error });
         throw new AccountFailedToSave();
       }
     }

@@ -16,7 +16,7 @@ export class UserController {
 
   @Post()
   public async addUser(@Body() dto: AddUserDto): Promise<AddUserResponse> {
-    this.logger.info('start');
+    this.logger.info('Start controller');
 
     await this.service.addUser(dto.telegramId, dto.firstName);
   }

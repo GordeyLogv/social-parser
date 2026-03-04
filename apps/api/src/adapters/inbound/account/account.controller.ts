@@ -16,14 +16,14 @@ export class AccountController {
 
   @Post('/search')
   public async searchAccount(@Body() dto: SearchAccountDto): Promise<SearchAccountResponse> {
-    this.logger.info('Start', { dto });
+    this.logger.info('Start contorller', { dto });
 
     return await this.service.searchAccount(dto);
   }
 
   @Post()
   public async addAccount(@Body() dto: ConfirmAccountDto): Promise<ConfirmAccountResponse> {
-    this.logger.info('Start', { dto });
+    this.logger.info('Start controller', { dto });
 
     return this.service.confirmAccount(dto);
   }
