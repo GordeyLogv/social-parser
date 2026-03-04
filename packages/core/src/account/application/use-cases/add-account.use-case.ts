@@ -20,18 +20,18 @@ export class AddAccountUseCase {
     const now = this.clock.at();
 
     try {
-      const createdAccount = AccountFactory.createNew({
+      const createdAccountProps = AccountFactory.createNew({
         userId: input.userId,
         platform: input.platform,
         handle: input.handle,
         url: input.url,
         createdAt: now,
         updatedAt: now,
-      });
+      }).toPrimitives();
 
-      await this.accountRepository.save(createdAccount);
+      await this.accountRepository.save(createdAccountProps);
 
-      this.logger.info(AddAccountLoggingMessage.FINISHED, { createdAccount });
+      this.logger.info(AddAccountLoggingMessage.FINISHED, { createdAccountProps });
     } catch (error) {
       if (error instanceof DomainError || error instanceof ApplicationError) {
         this.logger.warn(AddAccountLoggingMessage.FAILED, { error });

@@ -8,6 +8,14 @@ export const ErrorCodeToMessageMapper: Record<string, string> = {
   FIRST_NAME_TOO_SHORT: 'У вас слишком короткое название профиля, пожалуйста измените его',
   INVALID_TELEGRAM_ID: 'У вас невалидный telegram id, попробуйте позже',
 
+  DUPLICATE_URL: 'Аккаунт с таким url уже добавлен',
+  FAILED_TO_SAVE: 'Произоша ошибка при сохранении аккаунта. Попробуйте позже',
+  HANDLE_TO_LONG: 'Вы ввели слишком длинное название профиля',
+  HANDLE_TO_SHORT: 'Вы ввели слишком короткое название профиля',
+  INVALID_HANDLE: 'Вы ввели недопустимое название профиля',
+  INVALID_PLATFORM: 'Вы выбрали невалидную платформу',
+  NOT_SUPPORTED_PLATFORM: 'Выбранная платформа не поддерживается',
+
   VALIDATION_ERROR: 'Ошибка при валидации переданных данных, попробуйте ещё раз',
   NESTJS_ERROR: 'Произошла внутренняя ошибка, попробуйте позже',
 };

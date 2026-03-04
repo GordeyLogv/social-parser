@@ -36,7 +36,6 @@ export interface IAccountToPrimitives {
 
 export enum AccountPlatformsEnum {
   TIKTOK = 'tiktok',
-  INSTAGRAM = 'instagram',
   YOUTUBE = 'youtube',
 }
 

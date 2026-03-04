@@ -11,7 +11,6 @@ export class AccountPlatformVO {
 
   private static PLATFORM_MAP: Record<string, AccountPlatformsEnum> = {
     tiktok: AccountPlatformsEnum.TIKTOK,
-    instagram: AccountPlatformsEnum.INSTAGRAM,
     youtube: AccountPlatformsEnum.YOUTUBE,
   };
 

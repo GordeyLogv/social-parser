@@ -1,5 +1,5 @@
-import { AccountEntity } from '../../domain';
+import { IAccountToPrimitives } from '../../domain';
 
 export interface AccountRepositoryPort {
-  save: (account: AccountEntity) => Promise<void>;
+  save: (account: IAccountToPrimitives) => Promise<void>;
 }
