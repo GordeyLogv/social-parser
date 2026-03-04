@@ -15,7 +15,7 @@ export class ChoosedPlatformCallbackQuery implements ICallbackQuery {
   public constructor(@inject(TOKENS.ChoosedPlatformCallbackQueryLogger) private readonly logger: LoggerPort) {}
 
   public register(bot: Bot<MyContext>): void {
-    bot.callbackQuery(/^ui:add_account:(tiktok|instagram|youtube)$/, async (ctx) => {
+    bot.callbackQuery(/^ui:add_account:(tiktok|youtube)$/, async (ctx) => {
       const provider = ctx.match?.[1];
 
       const platform = mapperPlatform(provider);
