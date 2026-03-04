@@ -26,9 +26,7 @@ export class TelegramBot {
     @inject(TOKENS.CallbackQueriesRegistryHelper) private readonly callbackQueries: CallbackQueriesRegistryHelper,
     @inject(TOKENS.MiddlewaresRegistryHelper) private readonly middlewares: MiddlewaresRegistryHelper,
     @inject(TOKENS.ListenersMessageRegistryHelper) private readonly listeners: ListenerMessageRegistryHelper,
-  ) {
-    this.logger.info('Bot init');
-  }
+  ) {}
 
   private registerMiddlewares() {
     this.middlewares.registryAllMiddlewares(this.bot);
@@ -57,6 +55,7 @@ export class TelegramBot {
     this.registerCallbackQueries();
     this.registerListenersMessage();
 
+    this.logger.info('Bot success init');
     await this.bot.start();
   }
 }

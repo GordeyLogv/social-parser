@@ -16,7 +16,7 @@ export class AddAccountCallbackQuery implements ICallbackQuery {
 
   public register(bot: Bot<MyContext>): void {
     bot.callbackQuery('ui:add_account', async (ctx) => {
-      this.logger.info('Start', { telegramId: ctx.msg?.chat.id });
+      this.logger.info('Start callback', { telegramId: ctx.msg?.chat.id });
 
       await ctx.answerCallbackQuery();
 

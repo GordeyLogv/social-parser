@@ -1,1 +1,1 @@
-export const addAccountMessage = 'Какой аккаунт добавить?';
+export const addAccountMessage = 'Which account should I add?';

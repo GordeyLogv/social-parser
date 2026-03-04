@@ -1,7 +1,7 @@
 export const confirmAccountSuccessMessage = (accountUrl: string): string => {
-  return `Отлично, аккаунт:\n${accountUrl}\nуспешно добавлен`;
+  return `Greate, account:\n${accountUrl}\nsuccess added`;
 };
 
 export const confirmAccountFailedMessage = (accountUrl: string): string => {
-  return `Хорошо, раз аккаунт:\n${accountUrl}\nне твой, попробуем ещё раз?`;
+  return `Okay, since account:\n${accountUrl}\nnot your, shall we try again?`;
 };

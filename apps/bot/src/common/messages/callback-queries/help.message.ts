@@ -1,1 +1,1 @@
-export const helpMessage = 'Помощь';
+export const helpMessage = 'help';

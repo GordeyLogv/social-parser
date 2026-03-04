@@ -2,11 +2,11 @@ import { InlineKeyboard } from 'grammy';
 
 export const menuKeyboard = () => {
   return new InlineKeyboard()
-    .text('‼️ Помощь', 'ui:help')
+    .text('‼️ Help', 'ui:help')
     .row()
-    .text('🔎 Мои аккаунты', 'ui:my_accounts')
+    .text('🔎 My accounts', 'ui:my_accounts')
     .row()
-    .text('⚒️ Добавить аккаунт', 'ui:add_account')
+    .text('⚒️ Add account', 'ui:add_account')
     .row()
-    .text('⚖️ Топ 10', 'ui:top_accounts');
+    .text('⚖️ Top 10', 'ui:top_accounts');
 };

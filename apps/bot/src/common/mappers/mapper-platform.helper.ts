@@ -2,7 +2,6 @@ import { AccountPlatformsEnum } from '@app/core';
 
 const platformMap: Record<string, AccountPlatformsEnum> = {
   tiktok: AccountPlatformsEnum.TIKTOK,
-  instagram: AccountPlatformsEnum.INSTAGRAM,
   youtube: AccountPlatformsEnum.YOUTUBE,
 };
 

@@ -24,7 +24,7 @@ export class SearchedAccountListenerMessage implements IListerMessage {
     const handle = ctx.message!.text!;
     const platform = ctx.session.platform!;
 
-    this.logger.info('Start', { telegramId: ctx.msg?.chat.id, handle });
+    this.logger.info('Start listener', { telegramId: ctx.msg?.chat.id, handle });
 
     const { url } = await this.api.searchAccount({
       telegramId: String(ctx.msg?.chat.id),
@@ -32,7 +32,7 @@ export class SearchedAccountListenerMessage implements IListerMessage {
       platform,
     });
 
-    await ctx.reply(`Найден аккаунт:\n${url}\nДобавить?`, { reply_markup: confirmAccountKeyboard() });
+    await ctx.reply(`Finded account:\n${url}\nAdded?`, { reply_markup: confirmAccountKeyboard() });
 
     setSessionHelper(ctx, ContextSteepEnum.CONFIRM_ADDED_ACCOUNT, platform, handle, url);
 

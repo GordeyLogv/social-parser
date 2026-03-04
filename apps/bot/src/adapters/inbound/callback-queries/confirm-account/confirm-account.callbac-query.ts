@@ -25,6 +25,7 @@ export class ConfirmAccountCallbackQuery implements ICallbackQuery {
 
   public register(bot: Bot<MyContext>): void {
     bot.callbackQuery(/^ui:confirm_account:(success|failed)$/, async (ctx) => {
+      this.logger.info('Start callback');
       const provider = ctx.match?.[1];
 
       const sessionData = {
@@ -46,7 +47,7 @@ export class ConfirmAccountCallbackQuery implements ICallbackQuery {
   ): Promise<void> {
     await ctx.answerCallbackQuery();
 
-    this.logger.info('Пользоватеь подтвердил аккаунт', { telegramId: ctx.msg?.chat.id, accountUrl: input.url });
+    this.logger.info('User confirm account', { telegramId: ctx.msg?.chat.id, accountUrl: input.url });
 
     await this.api.confirmAccount(input);
 
@@ -58,7 +59,7 @@ export class ConfirmAccountCallbackQuery implements ICallbackQuery {
   private async failed(ctx: MyContext, telegramId: string, accountUrl: string): Promise<void> {
     await ctx.answerCallbackQuery();
 
-    this.logger.info('Пользоватеь не подтвердил аккаунт', { telegramId, accountUrl });
+    this.logger.info('User not confirm account', { telegramId, accountUrl });
 
     setSessionHelper(ctx, ContextSteepEnum.IDLE);
 

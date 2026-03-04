@@ -20,7 +20,7 @@ export class ChoosedPlatformCallbackQuery implements ICallbackQuery {
 
       const platform = mapperPlatform(provider);
 
-      this.logger.info('Start', { telegramId: ctx.msg?.chat.id, platform });
+      this.logger.info('Start calback', { telegramId: ctx.msg?.chat.id, platform });
 
       await ctx.answerCallbackQuery();
 

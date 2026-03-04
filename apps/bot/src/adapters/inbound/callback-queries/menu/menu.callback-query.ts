@@ -16,7 +16,7 @@ export class MenuCallbackQuery implements ICallbackQuery {
 
   public register(bot: Bot<MyContext>): void {
     bot.callbackQuery('ui:menu', async (ctx) => {
-      this.logger.info('Start', { user: { telegramId: ctx.msg?.chat.id } });
+      this.logger.info('Start callback', { user: { telegramId: ctx.msg?.chat.id } });
 
       await ctx.answerCallbackQuery();
 

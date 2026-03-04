@@ -14,7 +14,8 @@ export class ExceptionFilterAdapter implements ExceptionFilterPort {
   public async handle(error: unknown, ctx: MyContext): Promise<void> {
     const normalizedError = normalizedErrorHelper(error);
 
-    const errorMessageMapped = ErrorCodeToMessageMapper[normalizedError.code] ?? 'Что то пошло не так, попробуйсте позже';
+    const errorMessageMapped =
+      ErrorCodeToMessageMapper[normalizedError.code] ?? 'Something went wrong, please try again later';
 
     switch (normalizedError.logLevel) {
       case 'warn':

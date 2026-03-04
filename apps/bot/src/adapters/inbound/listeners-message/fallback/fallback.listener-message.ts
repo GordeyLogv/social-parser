@@ -16,7 +16,7 @@ export class FallbackListenerMessage implements IListerMessage {
       return false;
     }
 
-    this.logger.info('Start', { telegramId: ctx.msg?.chat.id });
+    this.logger.info('Start listener', { telegramId: ctx.msg?.chat.id });
 
     await ctx.reply(fallbackListenerMessage);
 

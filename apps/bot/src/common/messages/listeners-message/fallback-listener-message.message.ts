@@ -1,1 +1,1 @@
-export const fallbackListenerMessage = 'Воспользуйтесь инлайн клавиатурой';
+export const fallbackListenerMessage = 'Use the inline keyboard';

@@ -16,12 +16,11 @@ export class StartCommand implements ICommand {
   public constructor(
     @inject(TOKENS.StartCommandLogger) private logger: LoggerPort,
     @inject(TOKENS.ServerApiPort) private readonly api: ServerApiPort,
-  ) {
-    this.logger.info('Loading succes');
-  }
+  ) {}
 
   public register(bot: Bot<MyContext>): void {
     bot.command('start', async (ctx) => {
+      this.logger.info('Start command');
       const res = {
         telegramId: String(ctx.msg.chat.id),
         firstName: ctx.msg.chat.first_name,
@@ -29,10 +28,10 @@ export class StartCommand implements ICommand {
 
       try {
         await this.api.addUser(res);
-        this.logger.info('Пользователь валидный', { user: { telegramId: res.telegramId, firstName: res.firstName } });
+        this.logger.info('User is valid', { user: { telegramId: res.telegramId, firstName: res.firstName } });
       } catch (error) {
         if (error instanceof ApiError) {
-          this.logger.warn('Пользоватль невалидный', {
+          this.logger.warn('User is not valid', {
             user: { telegramId: res.telegramId, firstName: res.firstName },
             error: { code: error.code, message: error.message },
           });
