@@ -20,6 +20,7 @@ export const TOKENS = {
   HelpCallbackQueryLogger: Symbol.for('HelpCallbackQueryLogger'),
   AddAccountCallbackQueryLogger: Symbol.for('AddAccountCallbackQueryLogger'),
   ChoosedPlatformCallbackQueryLogger: Symbol.for('ChoosedPlatformCallbackQueryLogger'),
+  ConfirmAccountCallbackQueryLogger: Symbol.for('ConfirmAccountCallbackQueryLogger'),
 
   FallbackListenerMessageLogger: Symbol.for('FallbackListenerMessageLogger'),
   SearchedAccountListenerMessageLogger: Symbol.for('SearchedAccountListenerMessageLogger'),

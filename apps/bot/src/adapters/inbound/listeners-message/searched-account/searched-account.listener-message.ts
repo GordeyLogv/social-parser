@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify';
 
-import { AccountPlatformsEnum, LoggerPort } from '@app/core';
+import { LoggerPort } from '@app/core';
 
 import { IListerMessage } from '../listener-message.interface';
 import { MyContext } from '../../../../context';
 import { TOKENS } from '../../../../tokens';
-import { ContextSteepEnum, mapperPlatform, setSessionHelper } from '../../../../common';
+import { ContextSteepEnum, setSessionHelper } from '../../../../common';
 import { ServerApiPort } from '../../../outbound';
 import { confirmAccountKeyboard } from '../../keyboards';
 
@@ -26,15 +26,15 @@ export class SearchedAccountListenerMessage implements IListerMessage {
 
     this.logger.info('Start', { telegramId: ctx.msg?.chat.id, handle });
 
-    const res = await this.api.searchAccount({
+    const { url } = await this.api.searchAccount({
       telegramId: String(ctx.msg?.chat.id),
       handle,
       platform,
     });
 
-    await ctx.reply(`Найден аккаунт:\n${res.url}\nДобавить?`, { reply_markup: confirmAccountKeyboard() });
+    await ctx.reply(`Найден аккаунт:\n${url}\nДобавить?`, { reply_markup: confirmAccountKeyboard() });
 
-    setSessionHelper(ctx, ContextSteepEnum.CONFIRM_ADDED_ACCOUNT, mapperPlatform(platform));
+    setSessionHelper(ctx, ContextSteepEnum.CONFIRM_ADDED_ACCOUNT, platform, handle, url);
 
     return true;
   }

@@ -33,6 +33,7 @@ import {
 import { TelegramBot } from '../app/telegram-bot';
 
 import { MyContext } from '../context';
+import { ConfirmAccountCallbackQuery } from '../adapters/inbound/callback-queries/confirm-account/confirm-account.callbac-query';
 
 export const initContainer = (): Container => {
   const container = new Container();
@@ -127,6 +128,15 @@ export const initContainer = (): Container => {
     )
     .inSingletonScope();
   container
+    .bind<LoggerPort>(TOKENS.ConfirmAccountCallbackQueryLogger)
+    .toDynamicValue((ctx) =>
+      ctx
+        .get<LoggerPort>(TOKENS.LoggerPort)
+        .withHandle(LoggerHandleEnum.CALLBACK)
+        .withHandleName(ConfirmAccountCallbackQuery.name),
+    )
+    .inSingletonScope();
+  container
     .bind<LoggerPort>(TOKENS.CallbackQueriesRegistryLogger)
     .toDynamicValue((ctx) =>
       ctx
@@ -187,6 +197,7 @@ export const initContainer = (): Container => {
   container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(HelpCallbackQuery).inSingletonScope();
   container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(AddAccountCallbackQuery).inSingletonScope();
   container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(ChoosedPlatformCallbackQuery).inSingletonScope();
+  container.bind<ICallbackQuery>(TOKENS.ICallbackQuery).to(ConfirmAccountCallbackQuery).inSingletonScope();
   container
     .bind<CallbackQueriesRegistryHelper>(TOKENS.CallbackQueriesRegistryHelper)
     .to(CallbackQueriesRegistryHelper)

@@ -5,4 +5,6 @@ import { ContextSteepEnum } from './context-steep.enum';
 export interface SessionData {
   step: ContextSteepEnum;
   platform?: AccountPlatformsEnum;
+  handle?: string;
+  accountUrl?: string;
 }

@@ -9,6 +9,6 @@ export class ParserApiAdapter implements ParserApiPort {
   public constructor(private readonly logger: LoggerPort) {}
 
   public async searchAccount(handle: string, platform: string): Promise<string> {
-    throw new Error('Not implements');
+    return handle;
   }
 }
