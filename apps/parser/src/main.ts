@@ -15,6 +15,6 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ZodValidationPipe());
 
-  await app.listen(process.env.PORT ?? 5000);
+  await app.listen(process.env.PORT ?? 3500);
 }
 bootstrap().catch((e) => console.log(e));

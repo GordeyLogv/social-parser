@@ -4,6 +4,7 @@ import { LoggerHandleEnum, LoggerPort } from '@app/core';
 
 import { ParserApiAdapter } from './parser-api.adapter';
 import { TOKENS } from '../../../tokens';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   providers: [
@@ -14,8 +15,8 @@ import { TOKENS } from '../../../tokens';
     },
     {
       provide: TOKENS.ParserApiPort,
-      useFactory: (logger: LoggerPort) => new ParserApiAdapter(logger),
-      inject: [TOKENS.ParserApiLogging],
+      useFactory: (logger: LoggerPort, config: ConfigService) => new ParserApiAdapter(logger, config),
+      inject: [TOKENS.ParserApiLogging, ConfigService],
     },
   ],
   exports: [TOKENS.ParserApiPort],

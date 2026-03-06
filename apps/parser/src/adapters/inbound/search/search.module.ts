@@ -5,8 +5,10 @@ import { LoggerHandleEnum, LoggerPort } from '@app/core';
 import { SearchController } from './search.controller';
 import { SearchService } from './search.service';
 import { TOKENS } from '../../../tokens';
+import { ApiYoutubeModule } from '../../outbound';
 
 @Module({
+  imports: [ApiYoutubeModule],
   controllers: [SearchController],
   providers: [
     SearchService,
