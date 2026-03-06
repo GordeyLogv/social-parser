@@ -218,7 +218,7 @@ export const initContainer = (): Container => {
       const token = config.get('BOT_TOKEN');
       return new Bot(token);
     })
-    .inRequestScope();
+    .inSingletonScope();
 
   container.bind<TelegramBot>(TOKENS.TelegramBot).to(TelegramBot).inSingletonScope();
 

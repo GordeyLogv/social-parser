@@ -1,5 +1,20 @@
-import { bootstrap } from './app';
+import { NestFactory } from '@nestjs/core';
+import { ConsoleLogger } from '@nestjs/common';
 
-const app = bootstrap();
+import { ZodValidationPipe } from 'nestjs-zod';
 
-app.init();
+import { AppModule } from './app/app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule, {
+    logger: new ConsoleLogger({
+      prefix: 'Parser',
+      timestamp: true,
+    }),
+  });
+
+  app.useGlobalPipes(new ZodValidationPipe());
+
+  await app.listen(process.env.PORT ?? 5000);
+}
+bootstrap().catch((e) => console.log(e));

@@ -1,15 +1,11 @@
 export const TOKENS = {
   // Adapters
   LoggerPort: Symbol.for('LoggerPort'),
-  ConfigPort: Symbol.for('ConfigPort'),
-  ExceptionFilterPort: Symbol.for('ExceptionFilterPort'),
 
-  //Logging
-  ConfigLogging: Symbol.for('ConfigLogging'),
+  // Logging
+  SearchControllerLogger: Symbol.for('SearchControllerLogger'),
+  SearchServiceLogger: Symbol.for('SearchServiceLogger'),
 
-  ParserLogging: Symbol.for('ParserLogging'),
-
-  Express: Symbol.for('Express'),
-
-  Parser: Symbol.for('Parser'),
+  UpdateControllerLogger: Symbol.for('UpdateControllerLogger'),
+  UpdateServiceLogger: Symbol.for('UpdateServiceLogger'),
 };

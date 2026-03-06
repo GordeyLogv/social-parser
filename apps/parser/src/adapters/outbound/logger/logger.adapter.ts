@@ -1,8 +1,8 @@
-import { injectable } from 'inversify';
+import { Injectable } from '@nestjs/common';
 
 import { LoggerAppEnum, LoggerHandleEnum, LoggerPort } from '@app/core';
 
-@injectable()
+@Injectable()
 export class LoggerAdapter implements LoggerPort {
   constructor(
     private readonly app: LoggerAppEnum,

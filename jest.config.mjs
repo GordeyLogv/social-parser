@@ -33,5 +33,15 @@ export default {
       },
       moduleFileExtensions: ['ts', 'js', 'json'],
     },
+    {
+      displayName: 'parser',
+      rootDir: '.',
+      testEnvironment: 'node',
+      testMatch: ['<rootDir>/apps/api/**/*.spec.ts'],
+      transform: {
+        '^.+\\.tsx?$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.base.json' }],
+      },
+      moduleFileExtensions: ['ts', 'js', 'json'],
+    },
   ],
 };
