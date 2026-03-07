@@ -5,7 +5,7 @@ import { LoggerPort } from '@app/core';
 import { IListerMessage } from '../listener-message.interface';
 import { MyContext } from '../../../../context';
 import { TOKENS } from '../../../../tokens';
-import { ContextSteepEnum, setSessionHelper } from '../../../../common';
+import { ContextSteepEnum, searchAccountListenerMessage, setSessionHelper } from '../../../../common';
 import { ServerApiPort } from '../../../outbound';
 import { confirmAccountKeyboard } from '../../keyboards';
 
@@ -26,15 +26,15 @@ export class SearchedAccountListenerMessage implements IListerMessage {
 
     this.logger.info('Start listener', { telegramId: ctx.msg?.chat.id, handle });
 
-    const { url } = await this.api.searchAccount({
+    const account = await this.api.searchAccount({
       telegramId: String(ctx.msg?.chat.id),
       handle,
       platform,
     });
 
-    await ctx.reply(`Finded account:\n${url}\nAdded?`, { reply_markup: confirmAccountKeyboard() });
+    await ctx.reply(searchAccountListenerMessage(account), { reply_markup: confirmAccountKeyboard() });
 
-    setSessionHelper(ctx, ContextSteepEnum.CONFIRM_ADDED_ACCOUNT, platform, handle, url);
+    setSessionHelper(ctx, ContextSteepEnum.CONFIRM_ADDED_ACCOUNT, platform, handle, account.url);
 
     return true;
   }
