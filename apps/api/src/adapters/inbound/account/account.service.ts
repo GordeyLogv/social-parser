@@ -43,13 +43,13 @@ export class AccountService {
       userId: userProps.id,
       platform: input.platform,
       handle: input.handle,
-      url: input.url,
+      url: url,
     });
 
     this.logger.info('User saved account', {
       userId: userProps.id,
       telegramId: userProps.telegramId,
-      url: input.url,
+      url: url,
     });
   }
 }

@@ -3,10 +3,20 @@ import { HttpException } from '@nestjs/common';
 import { ZodValidationException } from 'nestjs-zod';
 
 import { ApplicationError, DomainError, NormalizedError, normalizedCustomErrorHelper } from '@app/core';
+import { ApiError } from '../../../common';
 
 export const normalizedErrorHelper = (error: unknown): NormalizedError => {
   if (error instanceof DomainError || error instanceof ApplicationError) {
     return normalizedCustomErrorHelper(error);
+  }
+
+  if (error instanceof ApiError) {
+    return {
+      type: 'infra',
+      code: error.code,
+      message: error.message,
+      logLevel: 'error',
+    };
   }
 
   if (error instanceof ZodValidationException) {
