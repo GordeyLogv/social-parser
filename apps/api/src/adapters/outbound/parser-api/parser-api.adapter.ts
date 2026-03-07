@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { LoggerPort } from '@app/core';
 
 import { ParserApiPort } from './parser-api.port';
+import { SearchAccountResponse } from '@app/contracts';
 
 @Injectable()
 export class ParserApiAdapter implements ParserApiPort {
@@ -16,8 +17,8 @@ export class ParserApiAdapter implements ParserApiPort {
     this.baseUrl = config.getOrThrow<string>('BASE_URL_PARSER');
   }
 
-  public async searchAccount(handle: string, platform: string): Promise<any> {
-    this.logger.info(`Start`, { handle, platform });
+  public async searchAccount(handle: string, platform: string): Promise<SearchAccountResponse> {
+    this.logger.info(`Start`, { handle });
 
     const res = fetch(`${this.baseUrl}/search`, {
       method: 'post',
@@ -27,6 +28,8 @@ export class ParserApiAdapter implements ParserApiPort {
       body: JSON.stringify({ handle, platform }),
     });
 
-    return res;
+    if (!res.ok) {
+      throw new 
+    }
   }
 }

@@ -1,0 +1,7 @@
+export const ERROR_STATUS_MAP: Record<string, number> = {
+  INVALID_MATCH: 502,
+  INVALID_JSON: 500,
+  NOT_FOUND: 404,
+  VALIDATION_ERROR: 400,
+  UNKNOWN_ERROR: 500,
+};

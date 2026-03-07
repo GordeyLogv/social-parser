@@ -12,10 +12,12 @@ export class SearchService {
     @Inject(TOKENS.ApiYoutubePort) private readonly api: ApiYoutubePort,
   ) {}
 
-  public async search(input: { handle: string; platform: string }) {
+  public async search(handle: string, platfrom: string) {
     this.logger.info('Start');
-    const res = await this.api.searchByHandle(input.handle, input.platform);
+
+    const res = await this.api.searchByHandle(handle);
 
     this.logger.info('Result', { res });
+    return res;
   }
 }

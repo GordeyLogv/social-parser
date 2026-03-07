@@ -14,14 +14,14 @@ export class AccountService {
     @Inject(TOKENS.ParserApiPort) private readonly api: ParserApiPort,
   ) {}
 
-  public async searchAccount(input: { telegramId: string; handle: string; platform: string }): Promise<{ url: string }> {
+  public async searchAccount(input: { telegramId: string; handle: string; platform: string }) {
     this.logger.info(`User: ${input.telegramId} finding account`, { handle: input.handle, platform: input.platform });
 
-    const url = await this.api.searchAccount(input.handle, input.platform);
+    const parsedAccount = await this.api.searchAccount(input.handle, input.platform);
 
-    this.logger.info('Finded account', { account: url });
+    this.logger.info('Finded account', { account: parsedAccount });
 
-    return { url };
+    return { parsedAccount };
   }
 
   public async confirmAccount(input: { telegramId: string; handle: string; platform: string; url: string }): Promise<void> {

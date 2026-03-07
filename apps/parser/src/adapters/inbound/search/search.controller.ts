@@ -1,11 +1,10 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
 
 import { LoggerPort } from '@app/core';
+import { SearchAccountResponse } from '@app/contracts';
 
 import { TOKENS } from '../../../tokens';
 import { SearchService } from './search.service';
-import { SearchAccountDto } from './dto';
-import { SearchAccountResponse } from '@app/contracts';
 
 @Controller('/search')
 export class SearchController {
@@ -15,8 +14,8 @@ export class SearchController {
   ) {}
 
   @Post()
-  async serachAccount(@Body() dto: { handle: string; platform: string }): Promise<any> {
+  async serachAccount(@Body() dto: { handle: string; platfrom: string }): Promise<SearchAccountResponse> {
     this.logger.info('Start controller', { dto });
-    return this.service.search(dto);
+    return this.service.search(dto.handle, dto.platfrom);
   }
 }

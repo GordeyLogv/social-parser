@@ -7,6 +7,7 @@ import {
   ConfirmAccountResponse,
   SearchAccountRequest,
   SearchAccountResponse,
+  SearchAccountResponseSchema,
 } from '@app/contracts';
 
 import { ServerApiPort } from './server-api.port';
@@ -61,7 +62,8 @@ export class ServerApiAdapter implements ServerApiPort {
     });
 
     if (res.ok) {
-      return await res.json();
+      const json: unknown = await res.json();
+      return SearchAccountResponseSchema.parse(json);
     }
 
     const text = await res.text();

@@ -4,6 +4,7 @@ export const TOKENS = {
   ApiYoutubePort: Symbol.for('ApiYoutubePort'),
 
   // Logging
+  ExceptionFilterLogger: Symbol.for('ExceptionFilterLogger'),
   ApiYoutubeLogger: Symbol.for('ApiYoutubeLogger'),
 
   SearchControllerLogger: Symbol.for('SearchControllerLogger'),
