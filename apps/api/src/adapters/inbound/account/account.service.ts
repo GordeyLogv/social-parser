@@ -1,9 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { AddAccountUseCase, GetUserUseCase, LoggerPort } from '@app/core';
+import { SearchAccountResponse } from '@app/contracts';
 
 import { TOKENS } from '../../../tokens';
 import { ParserApiPort } from '../../outbound/parser-api/parser-api.port';
+import { SearchAccountType } from '../../../common';
 
 @Injectable()
 export class AccountService {
@@ -14,21 +16,21 @@ export class AccountService {
     @Inject(TOKENS.ParserApiPort) private readonly api: ParserApiPort,
   ) {}
 
-  public async searchAccount(input: { telegramId: string; handle: string; platform: string }) {
-    this.logger.info(`User: ${input.telegramId} finding account`, { handle: input.handle, platform: input.platform });
+  public async searchAccount(input: SearchAccountType): Promise<SearchAccountResponse> {
+    this.logger.info(`User finding account`, { input });
 
-    const parsedAccount = await this.api.searchAccount(input.handle, input.platform);
+    const findedAccount = await this.api.searchAccount(input.handle, input.platform);
 
-    this.logger.info('Finded account', { account: parsedAccount });
+    this.logger.info('Found account', { account: findedAccount });
 
-    return { parsedAccount };
+    return findedAccount;
   }
 
-  public async confirmAccount(input: { telegramId: string; handle: string; platform: string; url: string }): Promise<void> {
+  public async confirmAccount(input: SearchAccountType, url: string): Promise<void> {
     this.logger.info(`User: ${input.telegramId} confirned account`, {
       handle: input.handle,
       platform: input.platform,
-      url: input.url,
+      url: url,
     });
 
     const checkExistsUser = await this.useCaseUser.execute({ telegramId: input.telegramId });
